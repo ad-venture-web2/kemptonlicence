@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Client Dashboard — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .wrap{max-width:1100px;margin:6rem auto;padding:2rem}
+    .card{background:#fff;border-radius:12px;padding:1rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+    .status{display:inline-block;padding:6px 10px;border-radius:18px;font-weight:600}
+    .s-received{background:#eef9f5;color:#0f5b44}
+    .s-submitted{background:#eef3ff;color:#3d2b7a}
+    .s-processing{background:#fff7e6;color:#8a5a00}
+    .s-ready{background:#e8f5e9;color:#1b5e20}
+    .btn{padding:8px 12px;border-radius:8px;background:var(--grad);color:#fff;border:none}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal)">Q4you Kempton Licences</a>
+  </nav>
+  <main class="wrap">
+    <h2>Your Applications</h2>
+    <p id="client-email"></p>
+    <div id="apps"></div>
+    <hr>
+    <h3>Upload Documents</h3>
+    <a class="btn" href="uploader.html">Open Secure Uploader</a>
+  </main>
+
+  <script>
+    const email = localStorage.getItem('q4_client_email') || 'guest@local';
+    document.getElementById('client-email').textContent = 'Signed in as: ' + email;
+
+    // Ensure sample data exists
+    if(!localStorage.getItem('q4_apps')){
+      const sample = [
+        {id:'APP001',service:'Licence Renewal',status:'Received',reg:'CA 123 GP',expiry:'2026-06-01',courier:'',docs:['ID copy','Proof of address']},
+        {id:'APP002',service:'Change of Ownership',status:'Processing',reg:'AB 987 GP',expiry:'2025-12-01',courier:'TRK12345',docs:['ID copy','Sale agreement']}
+      ];
+      localStorage.setItem('q4_apps',JSON.stringify(sample));
+    }
+
+    function render(){
+      const apps = JSON.parse(localStorage.getItem('q4_apps')||'[]');
+      const out = apps.map(a=>{
+        const badge = a.status==='Received'?'<span class="status s-received">Received</span>':a.status==='Submitted'?'<span class="status s-submitted">Submitted</span>':a.status==='Processing'?'<span class="status s-processing">Processing</span>':'<span class="status s-ready">Ready to Collect</span>';
+        const penalty = (new Date(a.expiry) < new Date())?'<div style="color:#b00020;font-weight:700">Penalty: Expired disc — additional fee may apply</div>':'';
+        const courier = a.courier?('<div>Courier: <a href="#" onclick="window.open(\'https://tracking.example/'+a.courier+'\')">'+a.courier+'</a></div>'):'<div>No courier yet</div>';
+        const docs = '<details><summary>Document checklist</summary><ul>'+ (a.docs||[]).map(d=>'<li>'+d+'</li>').join('') +'</ul></details>';
+        return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${a.service}</strong> — ${a.id}<br>${a.reg}</div><div>${badge}</div></div><div style="margin-top:8px">${penalty}${courier}${docs}</div><div style="margin-top:8px"><button class="btn" onclick="notify('${a.id}')">Notify via WhatsApp</button></div></div>`
+      }).join('');
+      document.getElementById('apps').innerHTML = out || '<p>No applications yet.</p>';
+    }
+
+    function notify(id){
+      const apps = JSON.parse(localStorage.getItem('q4_apps'));
+      const a = apps.find(x=>x.id===id);
+      const msg = encodeURIComponent(`Update on ${a.id}: current status is ${a.status}. Reg: ${a.reg}`);
+      const wa = 'https://wa.me/27842642299?text='+msg;
+      window.open(wa,'_blank');
+    }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Secure Uploader — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .wrap{max-width:820px;margin:6rem auto;padding:2rem}
+    .drop{border:2px dashed #e6e6e6;padding:2rem;text-align:center;border-radius:12px}
+    .file-list{margin-top:1rem}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal)">Q4you Uploader</a>
+  </nav>
+  <main class="wrap">
+    <h2>Secure Document Uploader (Prototype)</h2>
+    <p>Files are stored locally in your browser for demo only. In production, use S3/Netlify Functions or dedicated secure storage.</p>
+    <div class="drop">
+      <input type="file" id="file" multiple>
+      <div class="file-list" id="list"></div>
+    </div>
+  </main>
+  <script>
+    function render(){
+      const files = JSON.parse(localStorage.getItem('q4_uploads')||'[]');
+      const out = files.map(f=>`<div><strong>${f.name}</strong> — ${Math.round(f.size/1024)} KB <a href="${f.url}" target="_blank">view</a></div>`).join('');
+      document.getElementById('list').innerHTML = out || '<em>No files uploaded.</em>';
+    }
+    document.getElementById('file').addEventListener('change',async (e)=>{
+      const arr = JSON.parse(localStorage.getItem('q4_uploads')||'[]');
+      for(const f of e.target.files){
+        const data = await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f)});
+        arr.push({name:f.name,size:f.size,url:data});
+      }
+      localStorage.setItem('q4_uploads',JSON.stringify(arr)); render();
+    })
+    render();
+  </script>
+</body>
+</html>

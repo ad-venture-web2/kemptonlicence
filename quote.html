@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Instant Quote — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .wrap{max-width:760px;margin:6rem auto;padding:2rem}
+    .form-group{margin-bottom:1rem}
+    .btn{padding:10px 14px;border-radius:8px;background:var(--grad);color:#fff;border:none}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal)">Q4you Instant Quote</a>
+  </nav>
+  <main class="wrap">
+    <h2>Instant Quote Calculator</h2>
+    <p>Get an itemised estimate in seconds (prototype). Prices include illustrative gov fees.</p>
+    <div class="form-group">
+      <label>Service</label>
+      <select id="service" style="width:100%;padding:10px">
+        <option value="renewal">Licence Renewal</option>
+        <option value="new">New Registration</option>
+        <option value="change">Change of Ownership</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Vehicle Type</label>
+      <select id="vtype" style="width:100%;padding:10px">
+        <option value="car">Car</option>
+        <option value="bakkie">Bakkie</option>
+        <option value="truck">Truck</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Province</label>
+      <select id="prov" style="width:100%;padding:10px">
+        <option value="GP">Gauteng</option>
+        <option value="WC">Western Cape</option>
+        <option value="KZN">KwaZulu-Natal</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px"><button class="btn" onclick="calc()">Calculate</button><button class="btn" onclick="exportEmail()">Email Quote</button></div>
+    <div id="result" style="margin-top:1rem"></div>
+  </main>
+  <script>
+    const fees = {GP: {gov:120, courier:80}, WC:{gov:110, courier:90}, KZN:{gov:115, courier:85}};
+    function calc(){
+      const s=document.getElementById('service').value; const v=document.getElementById('vtype').value; const p=document.getElementById('prov').value;
+      const base = fees[p].gov; const courier=fees[p].courier; const serviceFee = s==='renewal'?150:s==='new'?300:200;
+      const total = base + courier + serviceFee;
+      const out = `<div class="card" style="padding:12px"><div><strong>Itemised Quote</strong></div><div>Government fee: R${base}</div><div>Service fee: R${serviceFee}</div><div>Courier: R${courier}</div><hr><div><strong>Total: R${total}</strong></div><div style="margin-top:8px"><button class="btn" onclick="proceed()">Proceed to Booking</button></div></div>`;
+      document.getElementById('result').innerHTML = out;
+      localStorage.setItem('q4_last_quote',JSON.stringify({service:s,vtype:v,prov:p,gov:base,serviceFee, courier,total}));
+    }
+    function exportEmail(){
+      const q = JSON.parse(localStorage.getItem('q4_last_quote')||'{}');
+      if(!q.total){alert('Calculate first');return}
+      const body = encodeURIComponent(`Quote:\nService: ${q.service}\nVehicle: ${q.vtype}\nProvince: ${q.prov}\nTotal: R${q.total}`);
+      window.location.href = `mailto:?subject=Q4you Quote&body=${body}`;
+    }
+    function proceed(){
+      alert('Proceed to booking (prototype) — open Contact page to send details');
+      location.href='contact.html';
+    }
+  </script>
+</body>
+</html>

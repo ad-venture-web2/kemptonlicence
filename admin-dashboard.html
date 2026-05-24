@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
++  <style>
++    .wrap{max-width:1100px;margin:6rem auto;padding:2rem}
++    .card{background:#fff;border-radius:12px;padding:1rem;margin-bottom:1rem;box-shadow:var(--shadow)}
++    .btn{padding:8px 12px;border-radius:8px;background:var(--grad);color:#fff;border:none}
++    select,input{padding:8px;border-radius:8px;border:1px solid #e6e6e6}
++  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal)">Q4you Admin</a>
+  </nav>
+  <main class="wrap">
+    <h2>Admin Dashboard</h2>
+    <p>Update application statuses — changes will notify the client via WhatsApp (prototype).</p>
+    <div id="apps"></div>
+  </main>
+
+  <script>
+    if(!localStorage.getItem('q4_apps')){
+      alert('No applications present. Visit client dashboard to create sample data.');
+    }
+    function render(){
+      const apps = JSON.parse(localStorage.getItem('q4_apps')||'[]');
+      document.getElementById('apps').innerHTML = apps.map(a=>{
+        return `<div class="card"><div style="display:flex;justify-content:space-between"><div><strong>${a.id}</strong> — ${a.service}</div><div><select onchange="updateStatus('${a.id}',this.value)"><option${a.status==='Received'? ' selected':''}>Received</option><option${a.status==='Submitted'? ' selected':''}>Submitted</option><option${a.status==='Processing'? ' selected':''}>Processing</option><option${a.status==='Ready to Collect'? ' selected':''}>Ready to Collect</option></select></div></div><div style="margin-top:8px">Courier: <input value="${a.courier||''}" onchange="updateCourier('${a.id}',this.value)"></div></div>`
+      }).join('');
+    }
+    function updateStatus(id,status){
+      const apps = JSON.parse(localStorage.getItem('q4_apps'));
+      const a = apps.find(x=>x.id===id); a.status = status; localStorage.setItem('q4_apps',JSON.stringify(apps)); render();
+      const msg = encodeURIComponent(`Hello — your application ${id} status changed to: ${status}`);
+      window.open('https://wa.me/27842642299?text='+msg,'_blank');
+    }
+    function updateCourier(id,val){
+      const apps = JSON.parse(localStorage.getItem('q4_apps'));
+      const a = apps.find(x=>x.id===id); a.courier = val; localStorage.setItem('q4_apps',JSON.stringify(apps));
+    }
+    render();
+  </script>
+</body>
+</html>

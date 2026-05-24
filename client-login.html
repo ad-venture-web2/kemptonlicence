@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Client Login — Q4you Kempton Licences</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .center { max-width:520px;margin:6rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:var(--shadow);}
+    .form-group{margin-bottom:1rem}
+    .btn{display:inline-block;padding:10px 18px;border-radius:8px;border:none;background:var(--grad);color:#fff;cursor:pointer}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal)">Q4you Kempton Licences</a>
+  </nav>
+
+  <main class="center">
+    <h2>Client Login</h2>
+    <p>Enter your email to access your client dashboard. (Prototype — no password)</p>
+    <div class="form-group">
+      <label>Email</label>
+      <input id="email" placeholder="you@company.com" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="login">Login</button>
+      <a href="client-dashboard.html" style="align-self:center;color:var(--muted)">Or continue as guest</a>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('login').addEventListener('click',()=>{
+      const email = document.getElementById('email').value.trim();
+      if(!email){alert('Enter email');return}
+      localStorage.setItem('q4_client_email',email);
+      location.href='client-dashboard.html';
+    })
+  </script>
+</body>
+</html>

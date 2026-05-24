@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fleet Dashboard — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .wrap{max-width:1100px;margin:6rem auto;padding:2rem}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid #f2f2f2}
+    .alert{color:#b00020}
++    .ok{color:#0b8043}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal)">Q4you Fleet</a>
+  </nav>
+  <main class="wrap">
+    <h2>Fleet Management</h2>
+    <p>Centralized vehicle inventory, expiry alerts, bulk renewals (prototype)</p>
+    <table id="fleet">
+      <thead><tr><th>Reg</th><th>Owner</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div style="margin-top:1rem"><button onclick="bulkRenew()" class="btn">Bulk Renew Selected</button></div>
+  </main>
+  <script>
+    if(!localStorage.getItem('q4_fleet')){
+      const sample = [
+        {reg:'CA 123 GP',owner:'Company A',expiry:'2026-06-01',status:'Active'},
+        {reg:'AB 987 GP',owner:'Company A',expiry:'2024-11-01',status:'Expired'}
+      ]; localStorage.setItem('q4_fleet',JSON.stringify(sample));
+    }
+    function render(){
+      const t=document.querySelector('#fleet tbody'); t.innerHTML='';
+      const rows=JSON.parse(localStorage.getItem('q4_fleet')||'[]');
+      rows.forEach((r,i)=>{
+        const exp = new Date(r.expiry);
+        const days = Math.ceil((exp - new Date())/(1000*60*60*24));
+        let note = '';
+        if(days<0) note = '<span class="alert">Expired</span>';
+        else if(days<=7) note = '<span class="alert">Expires in '+days+' days</span>';
+        else if(days<=30) note = '<span style="color:#b67500">Expires in '+days+' days</span>';
+        else note = '<span class="ok">OK</span>';
+        t.innerHTML += `<tr><td>${r.reg}</td><td>${r.owner}</td><td>${r.expiry}</td><td>${note}</td><td><input type="checkbox" data-i="${i}"></td></tr>`
+      })
+    }
+    function bulkRenew(){
+      const checks = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(c=>parseInt(c.dataset.i));
+      const rows = JSON.parse(localStorage.getItem('q4_fleet'));
+      checks.forEach(i=>{ const next = new Date(); next.setFullYear(next.getFullYear()+1); rows[i].expiry = next.toISOString().slice(0,10); });
+      localStorage.setItem('q4_fleet',JSON.stringify(rows)); render();
+      alert('Bulk renew completed (prototype)');
+    }
+    render();
+  </script>
+</body>
+</html>
