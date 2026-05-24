@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Tools – Q4you Kempton Licences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Hero */
+  .hero { padding: 110px 5vw 60px; background: var(--cream); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -120px; right: -100px; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,43,122,0.08) 0%, transparent 65%); pointer-events: none;
+  }
+  .hero-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(2.5rem, 4.5vw, 4rem); line-height: 1.08; color: var(--ink); margin-bottom: 0.5rem; }
+  h1 em { font-style: italic; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 600px; margin-top: 1.5rem; }
+
+  /* Feature Showcase */
+  #tools { background: var(--white); }
+  .tool-showcase {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 3rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center;
+    margin-bottom: 3rem; position: relative; overflow: hidden;
+  }
+  .tool-showcase::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+    background: var(--grad);
+  }
+  .tool-showcase h2 { margin-bottom: 1rem; }
+  .tool-showcase.alt { grid-template-columns: 1fr 1fr; direction: rtl; }
+  .tool-showcase.alt > * { direction: ltr; }
+  .tool-pitch p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
+  .features-list { list-style: none; margin: 1.5rem 0; }
+  .features-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.6;
+  }
+  .features-list .tick { color: var(--teal); flex-shrink: 0; font-weight: 700; margin-top: 2px; }
+
+  /* Tool Preview Box */
+  .tool-preview {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .preview-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+
+  /* Tracker */
+  .tracker-box {
+    background: linear-gradient(135deg, var(--purple-pale) 0%, var(--teal-pale) 100%);
+    border-radius: var(--radius-sm); padding: 1.25rem; margin: 1rem 0;
+  }
+  .tr-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .tr-dot { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; }
+  .tr-dot.done { background: var(--green); color: white; }
+  .tr-dot.active { background: var(--grad); color: white; }
+  .tr-dot.wait { background: #e0e0e0; color: var(--muted); }
+  .tr-text { font-size: 0.9rem; font-weight: 500; }
+  .tr-text.done { color: var(--green); }
+  .tr-text.active { color: var(--ink); }
+  .tr-text.wait { color: var(--muted); }
+
+  /* Document Upload */
+  .upload-demo {
+    background: var(--cream); border: 2px dashed var(--border); border-radius: var(--radius-sm);
+    padding: 2rem; text-align: center; margin: 1.5rem 0;
+  }
+  .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .upload-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* Tool Cards Grid */
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+  .tool-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .tool-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--teal-light); }
+  .tool-badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; margin-bottom: 0.75rem;
+  }
+  .badge-free { background: var(--green-pale); color: var(--green); }
+  .badge-new { background: var(--purple-pale); color: var(--purple-mid); }
+  .badge-pro { background: var(--teal-pale); color: var(--teal); }
+  .badge-coming { background: #fff4e5; color: #cc8800; }
+  .tool-card h3 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .tool-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+  /* Comparison Table */
+  .comparison-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+  .comparison-table th, .comparison-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .comparison-table th { background: var(--cream); font-weight: 700; color: var(--ink); }
+  .comparison-table td { color: var(--muted); }
+  .comparison-table .check { color: var(--teal); font-weight: 700; }
+  .comparison-table .cross { color: #d32f2f; }
+
+  /* CTA Section */
+  .tools-cta { background: linear-gradient(135deg, #1a6b5a 0%, #0f4a3e 100%); color: white; padding: 3rem; border-radius: var(--radius); margin-top: 3rem; text-align: center; }
+  .tools-cta h2 { color: white; margin-bottom: 1rem; }
+  .tools-cta p { max-width: 600px; margin: 0 auto 1.5rem; font-size: 1rem; opacity: 0.95; }
+
+  @media (max-width: 780px) {
+    .hero { padding: 80px 3vw 40px; }
+    .tool-showcase, .tool-showcase.alt { grid-template-columns: 1fr; gap: 2rem; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .comparison-table { font-size: 0.8rem; }
+    .comparison-table th, .comparison-table td { padding: 0.75rem; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="q-mark">
+      <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="qgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3d2b7a"/><stop offset="100%" stop-color="#1a6b5a"/>
+          </linearGradient>
+        </defs>
+        <text x="2" y="44" font-family="Georgia, serif" font-size="50" font-weight="700" font-style="italic" fill="url(#qgrad)">Q</text>
+        <text x="14" y="28" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#2e7d32">4</text>
+        <text x="10" y="37" font-family="Arial, sans-serif" font-size="6.5" fill="#1a6b5a">you</text>
+        <circle cx="26" cy="16" r="3" fill="#2e7d32"/><circle cx="33" cy="14" r="3.5" fill="#1a6b5a"/><circle cx="40" cy="16" r="3" fill="#3d2b7a"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-q4">Q4you</div>
+      <div class="logo-name">Kempton Licences</div>
+      <div class="logo-sub">Vehicle Licensing Agents</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="digital-tools.html" class="active">Digital Tools</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/27842642299" class="nav-cta" target="_blank">📱 WhatsApp Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Smarter Licensing<br><em>Built For You</em></h1>
+    <p class="hero-desc">We're building next-generation digital tools to make vehicle licensing faster, easier, and completely transparent. From real-time tracking to instant quotes, Q4you is reimagining the experience.</p>
+  </div>
+</section>
+
+<!-- TOOL SHOWCASES -->
+<section id="tools">
+  <div class="section-inner">
+    <p class="section-tag">Digital Enhancements</p>
+    <h2>Game-Changing<br><em>Tools & Features</em></h2>
+
+    <!-- TOOL 1: TRACKER -->
+    <div class="tool-showcase">
+      <div class="tool-pitch">
+        <h2>📍 Real-Time Application Tracker</h2>
+        <p>No more uncertainty. Clients enter a reference number and see live progress — from document receipt through to collection-ready — with automatic WhatsApp updates at each milestone.</p>
+        <ul class="features-list">
+          <li><span class="tick">✓</span> Live stages: Received → Submitted → Processing → Ready to Collect</li>
+          <li><span class="tick">✓</span> WhatsApp notifications at every status change</li>
+          <li><span class="tick">✓</span> Courier tracking number linked to each application</li>
+          <li><span class="tick">✓</span> Document checklist — bring exactly what's needed</li>
+          <li><span class="tick">✓</span> Penalty alert if applying at month-end on an expired disc</li>
+        </ul>
+        <a href="contact.html" class="btn-primary" style="font-size:0.85rem;padding:11px 28px;margin-top:1rem;">Enquire About This Feature</a>
+      </div>
+      <div class="tool-preview">
+        <div class="preview-label">Live Example: REF #KL-20264812</div>
+        <div class="tracker-box">
+          <div class="tr-item">
+            <div class="tr-dot done">✓</div>
+            <div class="tr-text done">Documents Received</div>
+          </div>
+          <div class="tr-item">
+            <div class="tr-dot done">✓</div>
+            <div class="tr-text done">Submitted to DLTC</div>
+          </div>
+          <div class="tr-item">
+            <div class="tr-dot active">→</div>
+            <div class="tr-text active">Processing at DLTC</div>
+          </div>
+          <div class="tr-item">
+            <div class="tr-dot wait">⏳</div>
+            <div class="tr-text wait">Ready for Courier / Collection</div>
+          </div>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--muted); margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+          Last updated: Today, 11:42 AM · Estimated ready: Tomorrow afternoon
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOL 2: DOCUMENT UPLOADER -->
+    <div class="tool-showcase alt">
+      <div class="tool-pitch">
+        <h2>📄 Secure Document Uploader</h2>
+        <p>Upload your ID, proof of address, vehicle papers, and authority forms directly from your phone. Sign digitally. No paperwork needed. Everything encrypted and secure.</p>
+        <ul class="features-list">
+          <li><span class="tick">✓</span> Mobile-friendly upload interface</li>
+          <li><span class="tick">✓</span> Digital signature capture (legally binding)</li>
+          <li><span class="tick">✓</span> Bank-grade encryption for all files</li>
+          <li><span class="tick">✓</span> Automatic document validation (checks file type & quality)</li>
+          <li><span class="tick">✓</span> Instant confirmation of receipt</li>
+        </ul>
+        <a href="contact.html" class="btn-primary" style="font-size:0.85rem;padding:11px 28px;margin-top:1rem;">Enquire About This Feature</a>
+      </div>
+      <div class="tool-preview">
+        <div class="preview-label">Upload Checklist</div>
+        <div class="upload-demo">
+          <div class="upload-icon">📱</div>
+          <div class="upload-text"><strong>Tap to Upload</strong></div>
+          <div style="font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem;">Select files from your device</div>
+        </div>
+        <div style="margin: 1.25rem 0; font-size: 0.85rem;">
+          <div style="display: flex; gap: 8px; margin-bottom: 0.5rem;"><span style="color: var(--teal); font-weight: 700;">✓</span> <span>ID Copy (PDF/JPG)</span></div>
+          <div style="display: flex; gap: 8px; margin-bottom: 0.5rem;"><span style="color: var(--teal); font-weight: 700;">✓</span> <span>Proof of Address (Utility Bill)</span></div>
+          <div style="display: flex; gap: 8px; margin-bottom: 0.5rem;"><span style="color: var(--teal); font-weight: 700;">✓</span> <span>Vehicle Registration (J318)</span></div>
+          <div style="display: flex; gap: 8px;"><span style="color: var(--teal); font-weight: 700;">✓</span> <span>Authority Form (Signed)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOL 3: FLEET MANAGEMENT -->
+    <div class="tool-showcase">
+      <div class="tool-pitch">
+        <h2>🚗 Fleet Management Portal</h2>
+        <p>For businesses with multiple vehicles — one dashboard showing all disc expiry dates, renewal statuses, payment history, and compliance reports at a glance.</p>
+        <ul class="features-list">
+          <li><span class="tick">✓</span> Centralized vehicle inventory dashboard</li>
+          <li><span class="tick">✓</span> Expiry date alerts (60, 30, 7 days before)</li>
+          <li><span class="tick">✓</span> Bulk renewal management</li>
+          <li><span class="tick">✓</span> Payment history & invoicing</li>
+          <li><span class="tick">✓</span> Team member access control (admin/viewer)</li>
+        </ul>
+        <a href="contact.html" class="btn-primary" style="font-size:0.85rem;padding:11px 28px;margin-top:1rem;">Enquire About This Feature</a>
+      </div>
+      <div class="tool-preview">
+        <div class="preview-label">Fleet Dashboard Overview</div>
+        <table class="comparison-table" style="margin-top: 0;">
+          <thead>
+            <tr>
+              <th>Vehicle</th>
+              <th>Expiry</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>CA 123 GP</td><td>2026-12-31</td><td><span class="check">✓ Valid</span></td></tr>
+            <tr><td>GA 456 GP</td><td>2026-07-15</td><td><span style="color: #ff9800;">⚡ Due Soon</span></td></tr>
+            <tr><td>CA 789 GP</td><td>2026-04-30</td><td><span class="cross">✗ Expired</span></td></tr>
+            <tr><td>GA 234 GP</td><td>2027-03-20</td><td><span class="check">✓ Valid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TOOL 4: INSTANT QUOTE -->
+    <div class="tool-showcase alt">
+      <div class="tool-pitch">
+        <h2>💰 Instant Quote Calculator</h2>
+        <p>Enter vehicle type, service needed, and province — get a clear, itemised estimate in under 30 seconds. No phone call required. No surprises at the end.</p>
+        <ul class="features-list">
+          <li><span class="tick">✓</span> Real-time pricing based on current government fees</li>
+          <li><span class="tick">✓</span> Automatic province selection with local rates</li>
+          <li><span class="tick">✓</span> Item-by-item breakdown (gov fee, service, courier, etc.)</li>
+          <li><span class="tick">✓</span> Instant quote export to email</li>
+          <li><span class="tick">✓</span> One-click proceed to booking</li>
+        </ul>
+        <a href="contact.html" class="btn-primary" style="font-size:0.85rem;padding:11px 28px;margin-top:1rem;">Enquire About This Feature</a>
+      </div>
+      <div class="tool-preview">
+        <div class="preview-label">Example Quote</div>
+        <div style="background: var(--cream); border-radius: var(--radius-sm); padding: 1.25rem; margin: 1rem 0;">
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; font-size: 0.9rem; margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">
+            <span>Government Licence Fee (renewal)</span><span style="font-weight: 600;">R 236.00</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; font-size: 0.9rem; margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">
+            <span>Q4you Service Charge</span><span style="font-weight: 600;">R 150.00</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; font-size: 0.9rem; margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">
+            <span>Courier Delivery (optional)</span><span style="font-weight: 600;">R 85.00</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; font-size: 1rem; font-weight: 700; color: var(--teal);">
+            <span>Total</span><span>R 471.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL TOOLS GRID -->
+<section id="tools">
+  <div class="section-inner" style="margin-top: 4rem;">
+    <h2 style="margin-bottom: 0.5rem;">Complete Tool Suite</h2>
+    <p class="section-desc" style="margin-bottom: 2.5rem;">Every digital feature you need to manage your vehicle licensing with confidence.</p>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <span class="tool-badge badge-free">Free</span>
+        <h3>🔔 Renewal Reminder Engine</h3>
+        <p>Register your disc expiry once. Receive automatic WhatsApp reminders at 60, 30 and 7 days before expiry. Never lapse or face fines again.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-coming">Coming Soon</span>
+        <h3>🔐 Barcode & QR System</h3>
+        <p>Generate unique tracking codes for each application. Share with stakeholders. Instant authentication for document verification at government offices.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-pro">Pro</span>
+        <h3>📊 Compliance Reports</h3>
+        <p>Monthly PDF reports for dealerships and fleet managers — all vehicles, statuses and upcoming renewals in one professional document.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-free">Free</span>
+        <h3>🤖 24/7 WhatsApp Bot</h3>
+        <p>Handles FAQs, collects vehicle details and logs service requests around the clock — even on weekends and public holidays.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-new">New</span>
+        <h3>💼 Team Collaboration Hub</h3>
+        <p>Share applications with family members or business partners. Approve payments, review documents, and get updates together in real-time.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-pro">Pro</span>
+        <h3>📈 Analytics Dashboard</h3>
+        <p>Track application volumes, turnaround times, cost trends, and service performance metrics over time. Data-driven decision making.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="tools">
+  <div class="section-inner">
+    <div class="tools-cta">
+      <h2>Ready to Experience<br><em>Smart Vehicle Licensing?</em></h2>
+      <p>Our digital tools are designed to save you time, money, and stress. Get early access to new features by signing up today.</p>
+      <a href="contact.html" class="btn-outline" style="border-color: white; color: white; margin-top: 1rem;">Enquire Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DIVIDER -->
+<div class="brand-divider">
+  <div class="divider-q">Q</div>
+  <div class="divider-content">
+    <div class="divider-title">The Future of Vehicle Licensing</div>
+    <div class="divider-sub">Is Here With Q4you</div>
+    <a href="https://wa.me/27842642299" class="divider-cta" target="_blank">Let's Talk</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Q4you <span>Kempton Licences</span></div>
+  <div style="margin-top:0.4rem">37B Mona Street, Glen Marais, Kempton Park · <a href="mailto:kempton.licences@gmail.com" style="color:rgba(255,255,255,0.5)">kempton.licences@gmail.com</a></div>
+  <div style="margin-top:0.5rem">© 2026 Q4you Kempton Licences · Fast · Professional · Hassle-Free</div>
+</footer>
+
+<a href="https://wa.me/27842642299" class="wa-fab" target="_blank" title="WhatsApp Us">💬</a>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog & News – Q4you Kempton Licences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Hero */
+  .hero { padding: 110px 5vw 60px; background: var(--cream); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -120px; right: -100px; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,43,122,0.08) 0%, transparent 65%); pointer-events: none;
+  }
+  .hero-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(2.5rem, 4.5vw, 4rem); line-height: 1.08; color: var(--ink); margin-bottom: 0.5rem; }
+  h1 em { font-style: italic; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 600px; margin-top: 1.5rem; }
+
+  /* Blog Section */
+  #blog { background: var(--white); }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+  
+  .blog-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .blog-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--teal-light); }
+  
+  .blog-image { width: 100%; height: 180px; background: linear-gradient(135deg, var(--purple-pale) 0%, var(--teal-pale) 100%); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+  
+  .blog-content { padding: 1.75rem; }
+  .blog-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; font-size: 0.8rem; color: var(--muted); }
+  .blog-category { display: inline-block; background: var(--teal-pale); color: var(--teal); padding: 3px 10px; border-radius: 99px; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; }
+  .blog-date { display: flex; align-items: center; gap: 4px; }
+  
+  .blog-card h3 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.15rem; color: var(--ink); margin-bottom: 0.6rem; line-height: 1.4; }
+  .blog-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+  
+  .blog-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .blog-read { color: var(--teal); font-weight: 600; font-size: 0.85rem; text-decoration: none; cursor: pointer; }
+  .blog-read:hover { text-decoration: underline; }
+  .blog-author { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--muted); }
+  .author-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--grad); }
+
+  /* Featured Article */
+  .featured-article {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--teal) 100%);
+    color: white; padding: 3rem; border-radius: var(--radius);
+    margin-bottom: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
+  }
+  .featured-article h2 { color: white; margin-bottom: 1rem; }
+  .featured-article p { color: rgba(255,255,255,0.85); line-height: 1.8; margin-bottom: 1.5rem; }
+  .featured-article .btn-outline { border-color: white; color: white; }
+  .featured-article .btn-outline:hover { background: white; color: var(--teal); }
+  
+  .featured-visual {
+    background: rgba(255,255,255,0.1); border-radius: var(--radius);
+    height: 250px; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; backdrop-filter: blur(10px);
+  }
+
+  /* Empty State */
+  .empty-state { text-align: center; padding: 3rem 2rem; }
+  .empty-state-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .empty-state h3 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .empty-state p { color: var(--muted); }
+
+  @media (max-width: 780px) {
+    .hero { padding: 80px 3vw 40px; }
+    .featured-article { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="q-mark">
+      <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="qgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3d2b7a"/><stop offset="100%" stop-color="#1a6b5a"/>
+          </linearGradient>
+        </defs>
+        <text x="2" y="44" font-family="Georgia, serif" font-size="50" font-weight="700" font-style="italic" fill="url(#qgrad)">Q</text>
+        <text x="14" y="28" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#2e7d32">4</text>
+        <text x="10" y="37" font-family="Arial, sans-serif" font-size="6.5" fill="#1a6b5a">you</text>
+        <circle cx="26" cy="16" r="3" fill="#2e7d32"/><circle cx="33" cy="14" r="3.5" fill="#1a6b5a"/><circle cx="40" cy="16" r="3" fill="#3d2b7a"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-q4">Q4you</div>
+      <div class="logo-name">Kempton Licences</div>
+      <div class="logo-sub">Vehicle Licensing Agents</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="digital-tools.html">Digital Tools</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/27842642299" class="nav-cta" target="_blank">📱 WhatsApp Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Blog & News<br><em>Stay Informed</em></h1>
+    <p class="hero-desc">Latest updates, tips, and news about vehicle licensing in South Africa. We regularly share insights to help you stay ahead of deadlines and understand your rights.</p>
+  </div>
+</section>
+
+<!-- BLOG SECTION -->
+<section id="blog">
+  <div class="section-inner">
+    <p class="section-tag">Latest Updates</p>
+    <h2>Q4you Insights<br><em>& News</em></h2>
+
+    <!-- Featured Article -->
+    <div class="featured-article">
+      <div>
+        <div style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 1rem;">Featured</div>
+        <h2>New NATIS System Updates<br>Impact Vehicle Renewals in 2026</h2>
+        <p>Recent changes to the e-NATIS system mean faster processing times but stricter document requirements. Here's what you need to know to avoid delays.</p>
+        <button class="btn-outline" style="border-color: white; color: white;">Read Full Article</button>
+      </div>
+      <div class="featured-visual">📋</div>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-image">🚗</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">Guide</span>
+            <span class="blog-date">📅 May 2026</span>
+          </div>
+          <h3>Complete Checklist for Licence Renewals</h3>
+          <p>Don't get turned away at the DLTC. We've compiled the ultimate checklist of documents you'll need for a smooth renewal.</p>
+          <div class="blog-footer">
+            <a href="#" class="blog-read">Read More →</a>
+            <div class="blog-author">
+              <div class="author-avatar"></div>
+              <span>Q4you Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-image">💰</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">News</span>
+            <span class="blog-date">📅 May 2026</span>
+          </div>
+          <h3>2026 Vehicle Licence Fee Updates</h3>
+          <p>Government has announced new licence renewal fees for 2026. See how your costs may change and plan accordingly.</p>
+          <div class="blog-footer">
+            <a href="#" class="blog-read">Read More →</a>
+            <div class="blog-author">
+              <div class="author-avatar"></div>
+              <span>Q4you Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-image">⏰</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">Tips</span>
+            <span class="blog-date">📅 April 2026</span>
+          </div>
+          <h3>When Should You Renew Your Vehicle Disc?</h3>
+          <p>Timing matters! Learn the best time to renew before your disc expires and avoid penalties and expensive late fees.</p>
+          <div class="blog-footer">
+            <a href="#" class="blog-read">Read More →</a>
+            <div class="blog-author">
+              <div class="author-avatar"></div>
+              <span>Q4you Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-image">📱</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">Product</span>
+            <span class="blog-date">📅 April 2026</span>
+          </div>
+          <h3>Introducing Q4you's New Tracking System</h3>
+          <p>Real-time application tracking is now live! See every step of your renewal journey from submission to collection.</p>
+          <div class="blog-footer">
+            <a href="#" class="blog-read">Read More →</a>
+            <div class="blog-author">
+              <div class="author-avatar"></div>
+              <span>Q4you Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-image">🏢</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">Business</span>
+            <span class="blog-date">📅 March 2026</span>
+          </div>
+          <h3>Fleet Management Best Practices</h3>
+          <p>Managing multiple vehicles? Discover strategies to streamline your fleet's licensing and stay compliant year-round.</p>
+          <div class="blog-footer">
+            <a href="#" class="blog-read">Read More →</a>
+            <div class="blog-author">
+              <div class="author-avatar"></div>
+              <span>Q4you Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-image">🔐</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">Security</span>
+            <span class="blog-date">📅 March 2026</span>
+          </div>
+          <h3>Protecting Your Vehicle Registration Documents</h3>
+          <p>Your vehicle registration contains sensitive data. Here's how to keep your J318 form and identification safe from fraud.</p>
+          <div class="blog-footer">
+            <a href="#" class="blog-read">Read More →</a>
+            <div class="blog-author">
+              <div class="author-avatar"></div>
+              <span>Q4you Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coming Soon Note -->
+    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--cream); border-radius: var(--radius);">
+      <p style="color: var(--muted); font-size: 0.95rem;">
+        More articles coming soon! Subscribe to our WhatsApp updates to be notified of new posts.
+      </p>
+      <a href="https://wa.me/27842642299" class="btn-primary" target="_blank" style="margin-top: 1rem;">Join Our WhatsApp Channel</a>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DIVIDER -->
+<div class="brand-divider">
+  <div class="divider-q">Q</div>
+  <div class="divider-content">
+    <div class="divider-title">Stay Updated With Q4you</div>
+    <div class="divider-sub">News, Tips & Industry Insights</div>
+    <a href="https://wa.me/27842642299" class="divider-cta" target="_blank">Subscribe Now</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Q4you <span>Kempton Licences</span></div>
+  <div style="margin-top:0.4rem">37B Mona Street, Glen Marais, Kempton Park · <a href="mailto:kempton.licences@gmail.com" style="color:rgba(255,255,255,0.5)">kempton.licences@gmail.com</a></div>
+  <div style="margin-top:0.5rem">© 2026 Q4you Kempton Licences · Fast · Professional · Hassle-Free</div>
+</footer>
+
+<a href="https://wa.me/27842642299" class="wa-fab" target="_blank" title="WhatsApp Us">💬</a>
+</body>
+</html>

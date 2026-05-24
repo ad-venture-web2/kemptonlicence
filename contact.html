@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us – Q4you Kempton Licences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Hero */
+  .hero { padding: 110px 5vw 60px; background: var(--cream); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -120px; right: -100px; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,43,122,0.08) 0%, transparent 65%); pointer-events: none;
+  }
+  .hero-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(2.5rem, 4.5vw, 4rem); line-height: 1.08; color: var(--ink); margin-bottom: 0.5rem; }
+  h1 em { font-style: italic; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 600px; margin-top: 1.5rem; }
+
+  /* Contact Section */
+  #contact { background: var(--white); }
+  .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+  
+  .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+  .contact-method { display: flex; gap: 1.25rem; align-items: flex-start; }
+  .contact-icon {
+    width: 50px; height: 50px; flex-shrink: 0; border-radius: 12px;
+    background: var(--teal-pale); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+  .contact-method h3 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 0.3rem; }
+  .contact-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); margin-bottom: 0.25rem; }
+  .contact-value { font-weight: 500; font-size: 0.95rem; color: var(--ink); line-height: 1.6; }
+  .contact-value a { color: var(--teal); text-decoration: none; font-weight: 600; }
+  .contact-value a:hover { text-decoration: underline; }
+
+  /* Form */
+  .contact-form {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.5rem;
+    box-shadow: var(--shadow);
+    position: relative; overflow: hidden;
+  }
+  .contact-form::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--grad); }
+  .contact-form h2 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+    font-size: 1.5rem; color: var(--ink); margin-bottom: 1.5rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 0.9rem; }
+  .contact-form textarea {
+    width: 100%; padding: 10px 13px; resize: vertical; min-height: 100px;
+    background: var(--cream); border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--ink); font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif; margin-bottom: 0.9rem; transition: border-color 0.2s;
+  }
+  .contact-form textarea:focus { outline: none; border-color: var(--teal); }
+  .contact-form textarea::placeholder { color: var(--muted); }
+  .submit-btn {
+    padding: 12px 28px; background: var(--grad); color: var(--white);
+    font-weight: 600; font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+    border: none; border-radius: 99px; cursor: pointer; width: 100%;
+    box-shadow: 0 4px 14px rgba(61,43,122,0.2); transition: opacity 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.9; }
+
+  /* Hours Section */
+  .hours-section {
+    background: linear-gradient(135deg, var(--purple-pale) 0%, var(--teal-pale) 100%);
+    border-radius: var(--radius); padding: 2rem; margin-top: 3rem;
+  }
+  .hours-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); margin-bottom: 1rem; }
+  .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .hour-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .hour-day { font-weight: 600; color: var(--ink); }
+  .hour-time { color: var(--teal); font-weight: 600; }
+  .hour-time.closed { color: #d32f2f; }
+
+  /* Map Section */
+  .map-section { margin-top: 3rem; }
+  .map-container {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; text-align: center;
+  }
+  .map-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .map-address { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .map-directions { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+  .map-link { display: inline-block; }
+
+  /* Quick Links */
+  .quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .quick-link {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1rem; text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .quick-link:hover { transform: translateY(-3px); border-color: var(--teal); }
+  .quick-link a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+  .quick-link a:hover { color: var(--teal); }
+
+  @media (max-width: 780px) {
+    .hero { padding: 80px 3vw 40px; }
+    .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .hours-grid { grid-template-columns: 1fr; }
+    .contact-form { padding: 1.5rem; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="q-mark">
+      <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="qgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3d2b7a"/><stop offset="100%" stop-color="#1a6b5a"/>
+          </linearGradient>
+        </defs>
+        <text x="2" y="44" font-family="Georgia, serif" font-size="50" font-weight="700" font-style="italic" fill="url(#qgrad)">Q</text>
+        <text x="14" y="28" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#2e7d32">4</text>
+        <text x="10" y="37" font-family="Arial, sans-serif" font-size="6.5" fill="#1a6b5a">you</text>
+        <circle cx="26" cy="16" r="3" fill="#2e7d32"/><circle cx="33" cy="14" r="3.5" fill="#1a6b5a"/><circle cx="40" cy="16" r="3" fill="#3d2b7a"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-q4">Q4you</div>
+      <div class="logo-name">Kempton Licences</div>
+      <div class="logo-sub">Vehicle Licensing Agents</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="digital-tools.html">Digital Tools</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/27842642299" class="nav-cta" target="_blank">📱 WhatsApp Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Ready to Skip<br><em>the Queue?</em></h1>
+    <p class="hero-desc">Get in touch with Q4you today. We're here to answer your questions, provide a quote, and get your vehicle licensing journey started. Fast response guaranteed.</p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-wrapper">
+      <!-- LEFT: INFO -->
+      <div class="contact-info">
+        <div class="contact-method">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Visit Us</div>
+            <div class="contact-value">37B Mona Street<br>Glen Marais, Kempton Park<br>Gauteng, 1619</div>
+          </div>
+        </div>
+
+        <div class="contact-method">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-label">WhatsApp (Primary)</div>
+            <div class="contact-value"><a href="https://wa.me/27842642299" target="_blank">084 264 2299</a></div>
+            <div style="font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem;">Reply within 2 hours</div>
+          </div>
+        </div>
+
+        <div class="contact-method">
+          <div class="contact-icon">☎️</div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-value"><a href="tel:+27842642299">084 264 2299</a> &nbsp;|&nbsp; <a href="tel:+27827834657">082 783 4657</a></div>
+          </div>
+        </div>
+
+        <div class="contact-method">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:kempton.licences@gmail.com">kempton.licences@gmail.com</a></div>
+          </div>
+        </div>
+
+        <!-- HOURS -->
+        <div class="hours-section">
+          <div class="hours-title">Office Hours</div>
+          <div class="hours-grid">
+            <div>
+              <div class="hour-item">
+                <span class="hour-day">Monday</span>
+                <span class="hour-time">9:00 AM – 5:00 PM</span>
+              </div>
+              <div class="hour-item">
+                <span class="hour-day">Tuesday</span>
+                <span class="hour-time">9:00 AM – 5:00 PM</span>
+              </div>
+              <div class="hour-item">
+                <span class="hour-day">Wednesday</span>
+                <span class="hour-time">9:00 AM – 5:00 PM</span>
+              </div>
+              <div class="hour-item">
+                <span class="hour-day">Thursday</span>
+                <span class="hour-time">9:00 AM – 5:00 PM</span>
+              </div>
+            </div>
+            <div>
+              <div class="hour-item">
+                <span class="hour-day">Friday</span>
+                <span class="hour-time">9:00 AM – 4:00 PM</span>
+              </div>
+              <div class="hour-item">
+                <span class="hour-day">Saturday</span>
+                <span class="hour-time closed">Closed</span>
+              </div>
+              <div class="hour-item">
+                <span class="hour-day">Sunday</span>
+                <span class="hour-time closed">Closed</span>
+              </div>
+              <div class="hour-item" style="color: var(--muted); font-size: 0.8rem; margin-top: 0.5rem;">
+                📱 WhatsApp available 24/7
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="contact-form">
+        <h2>Send an Enquiry</h2>
+        <div class="form-row">
+          <div class="form-group" style="margin: 0;">
+            <label>Your Name *</label>
+            <input type="text" placeholder="Jane Smith" required>
+          </div>
+          <div class="form-group" style="margin: 0;">
+            <label>Phone Number *</label>
+            <input type="tel" placeholder="082 000 0000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="jane@example.com">
+        </div>
+        <div class="form-group">
+          <label>Service Needed *</label>
+          <select required>
+            <option value="">— Select a service —</option>
+            <option>Licence Renewal</option>
+            <option>Change of Ownership</option>
+            <option>Deregistration</option>
+            <option>Number Plates</option>
+            <option>New Registration</option>
+            <option>Company Vehicle</option>
+            <option>Fleet Management</option>
+            <option>Other / General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Vehicle Registration (optional)</label>
+          <input type="text" placeholder="e.g. CA 123 GP">
+        </div>
+        <textarea placeholder="Tell us about your needs, expiry dates, province, or any special requirements…"></textarea>
+        <button class="submit-btn" onclick="handleSubmit(event)">Send Enquiry →</button>
+      </div>
+    </div>
+
+    <!-- MAP & LOCATION -->
+    <div class="map-section">
+      <div class="map-container">
+        <div class="map-icon">🗺️</div>
+        <div class="map-address">Q4you Kempton Licences Office</div>
+        <div class="map-directions">37B Mona Street, Glen Marais, Kempton Park, Gauteng 1619</div>
+        <a href="https://maps.google.com/?q=37B+Mona+Street+Glen+Marais+Kempton+Park" target="_blank" class="map-link">
+          <button class="btn-outline" style="width: auto;">📍 Open in Google Maps</button>
+        </a>
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div style="margin-top: 3rem;">
+      <h3 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 1.5rem;">Quick Links</h3>
+      <div class="quick-links">
+        <div class="quick-link">
+          <a href="https://wa.me/27842642299" target="_blank">💬 WhatsApp</a>
+        </div>
+        <div class="quick-link">
+          <a href="tel:+27842642299">☎️ Call Now</a>
+        </div>
+        <div class="quick-link">
+          <a href="mailto:kempton.licences@gmail.com">✉️ Email</a>
+        </div>
+        <div class="quick-link">
+          <a href="how-it-works.html">📖 How It Works</a>
+        </div>
+        <div class="quick-link">
+          <a href="services.html">🔄 Our Services</a>
+        </div>
+        <div class="quick-link">
+          <a href="digital-tools.html">⚙️ Digital Tools</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DIVIDER -->
+<div class="brand-divider">
+  <div class="divider-q">Q</div>
+  <div class="divider-content">
+    <div class="divider-title">We're Here For You</div>
+    <div class="divider-sub">Fast Response · Professional Service · Zero Stress</div>
+    <a href="https://wa.me/27842642299" class="divider-cta" target="_blank">Start on WhatsApp</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Q4you <span>Kempton Licences</span></div>
+  <div style="margin-top:0.4rem">37B Mona Street, Glen Marais, Kempton Park · <a href="mailto:kempton.licences@gmail.com" style="color:rgba(255,255,255,0.5)">kempton.licences@gmail.com</a></div>
+  <div style="margin-top:0.5rem">© 2026 Q4you Kempton Licences · Fast · Professional · Hassle-Free</div>
+</footer>
+
+<a href="https://wa.me/27842642299" class="wa-fab" target="_blank" title="WhatsApp Us">💬</a>
+
+<script>
+function handleSubmit(event) {
+  event.preventDefault();
+  alert('Thank you for your enquiry! We will be in touch shortly. For urgent help, please WhatsApp us directly on 084 264 2299.');
+}
+</script>
+</body>
+</html>

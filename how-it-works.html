@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works – Q4you Kempton Licences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Hero */
+  .hero { padding: 110px 5vw 60px; background: var(--cream); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -120px; right: -100px; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,43,122,0.08) 0%, transparent 65%); pointer-events: none;
+  }
+  .hero-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(2.5rem, 4.5vw, 4rem); line-height: 1.08; color: var(--ink); margin-bottom: 0.5rem; }
+  h1 em { font-style: italic; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 600px; margin-top: 1.5rem; }
+
+  /* Process Section */
+  #process { background: var(--white); }
+  .steps-wrap {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem; position: relative; margin-top: 3rem;
+  }
+  .steps-wrap::before {
+    content: ''; position: absolute;
+    top: 50px; left: 5%; right: 5%; height: 3px;
+    background: linear-gradient(90deg, var(--purple), var(--teal));
+    z-index: 0;
+  }
+  .step { text-align: center; padding: 0 1.5rem; position: relative; z-index: 1; }
+  .step-circle {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: var(--grad); color: var(--white);
+    font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 24px rgba(61,43,122,0.3);
+  }
+  .step h3 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem;
+    color: var(--ink); margin-bottom: 0.75rem;
+  }
+  .step p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+  .step-details { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* Detailed Steps */
+  .detailed-steps { margin-top: 4rem; }
+  .detail-step {
+    background: var(--cream); border-left: 4px solid var(--grad);
+    border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem;
+    display: grid; grid-template-columns: 60px 1fr; gap: 1.5rem; align-items: start;
+  }
+  .detail-step-num {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--grad); color: white;
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .detail-step h4 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .detail-step p { color: var(--muted); line-height: 1.8; margin-bottom: 0.75rem; }
+  .detail-check { font-size: 0.85rem; color: var(--muted); margin: 0.5rem 0; }
+  .detail-check::before { content: '✓ '; color: var(--teal); font-weight: 700; }
+
+  /* Timeline Alternative */
+  .timeline { margin-top: 3rem; }
+  .timeline-item {
+    display: flex; gap: 2rem; margin-bottom: 2.5rem; align-items: stretch;
+  }
+  .timeline-dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0; margin-top: 8px;
+  }
+  .timeline-line { width: 3px; background: linear-gradient(to bottom, var(--teal), var(--purple)); position: absolute; left: 13px; top: 60px; bottom: 0; }
+  .timeline-content {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; flex: 1;
+  }
+  .timeline-content h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; }
+  .timeline-content p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* FAQ / Common Questions */
+  .faq-section { background: var(--cream); padding: 3rem; border-radius: var(--radius); margin-top: 3rem; }
+  .faq-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.3rem; color: var(--ink); margin-bottom: 1.5rem; }
+  .faq-item { margin-bottom: 1.25rem; }
+  .faq-q { font-weight: 600; color: var(--ink); cursor: pointer; user-select: none; }
+  .faq-q::before { content: '▶ '; color: var(--teal); margin-right: 0.5rem; transition: transform 0.2s; }
+  .faq-a { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding-left: 1.5rem; margin-top: 0.5rem; }
+  .faq-item.active .faq-q::before { transform: rotate(90deg); }
+  .faq-item.active .faq-a { max-height: 500px; }
+
+  @media (max-width: 780px) {
+    .hero { padding: 80px 3vw 40px; }
+    .steps-wrap::before { display: none; }
+    .detail-step { grid-template-columns: 1fr; }
+    .detail-step-num { width: 50px; height: 50px; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="q-mark">
+      <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="qgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3d2b7a"/><stop offset="100%" stop-color="#1a6b5a"/>
+          </linearGradient>
+        </defs>
+        <text x="2" y="44" font-family="Georgia, serif" font-size="50" font-weight="700" font-style="italic" fill="url(#qgrad)">Q</text>
+        <text x="14" y="28" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#2e7d32">4</text>
+        <text x="10" y="37" font-family="Arial, sans-serif" font-size="6.5" fill="#1a6b5a">you</text>
+        <circle cx="26" cy="16" r="3" fill="#2e7d32"/><circle cx="33" cy="14" r="3.5" fill="#1a6b5a"/><circle cx="40" cy="16" r="3" fill="#3d2b7a"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-q4">Q4you</div>
+      <div class="logo-name">Kempton Licences</div>
+      <div class="logo-sub">Vehicle Licensing Agents</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="how-it-works.html" class="active">How It Works</a></li>
+    <li><a href="digital-tools.html">Digital Tools</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/27842642299" class="nav-cta" target="_blank">📱 WhatsApp Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Done For You<br><em>in 4 Easy Steps</em></h1>
+    <p class="hero-desc">No government offices. No long queues. No stress. We handle everything — from submission to your door. See how simple the Q4you process really is.</p>
+  </div>
+</section>
+
+<!-- PROCESS OVERVIEW -->
+<section id="process">
+  <div class="section-inner">
+    <p class="section-tag">Simple Process</p>
+    <h2>Your Journey With<br><em>Q4you</em></h2>
+    <p class="section-desc">Four simple steps to get your vehicle licensing sorted.</p>
+    
+    <div class="steps-wrap">
+      <div class="step">
+        <div class="step-circle">1</div>
+        <h3>Contact Us</h3>
+        <p>WhatsApp, call or email with your vehicle details and what you need done.</p>
+        <div class="step-details">Takes: 5 minutes</div>
+      </div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <h3>Get a Quote</h3>
+        <p>Receive a clear, all-inclusive quote — no hidden fees or surprises.</p>
+        <div class="step-details">Instant or within 24 hours</div>
+      </div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <h3>We Process</h3>
+        <p>Submit your documents. We stand in the queue and handle everything at the DLTC.</p>
+        <div class="step-details">5–10 working days</div>
+      </div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <h3>Disc Delivered</h3>
+        <p>Your licence disc or paperwork is returned to you — back on the road!</p>
+        <div class="step-details">Courier or collection</div>
+      </div>
+    </div>
+
+    <!-- DETAILED BREAKDOWN -->
+    <div class="detailed-steps">
+      <h3 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.5rem; margin-bottom: 2rem; margin-top: 3rem;">What Happens At Each Stage</h3>
+
+      <div class="detail-step">
+        <div class="detail-step-num">1</div>
+        <div>
+          <h4>📞 Step 1: Contact & Consultation</h4>
+          <p>Reach out via WhatsApp (084 264 2299), phone (082 783 4657), or email. Tell us:</p>
+          <div class="detail-check">What service you need (renewal, new registration, etc.)</div>
+          <div class="detail-check">Your vehicle registration number</div>
+          <div class="detail-check">Your current disc expiry date (if applicable)</div>
+          <div class="detail-check">Your preferred province and any special requirements</div>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted);">We respond within 2 hours during business hours.</p>
+        </div>
+      </div>
+
+      <div class="detail-step">
+        <div class="detail-step-num">2</div>
+        <div>
+          <h4>💰 Step 2: Instant Quote & Agreement</h4>
+          <p>We send you a clear breakdown of:</p>
+          <div class="detail-check">Government licensing fees</div>
+          <div class="detail-check">Q4you service charge (fixed, no surprises)</div>
+          <div class="detail-check">Optional courier or delivery fee</div>
+          <div class="detail-check">Expected turnaround time</div>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted);">Once you confirm, we collect 50% upfront (balance due on completion).</p>
+        </div>
+      </div>
+
+      <div class="detail-step">
+        <div class="detail-step-num">3</div>
+        <div>
+          <h4>📋 Step 3: Document Collection & Submission</h4>
+          <p>We'll send you a checklist of exactly what we need. Upload documents digitally or visit our office at:</p>
+          <p style="font-weight: 600; margin: 0.5rem 0;">37B Mona Street, Glen Marais, Kempton Park</p>
+          <div class="detail-check">ID copy & proof of residence</div>
+          <div class="detail-check">Vehicle registration document (J318)</div>
+          <div class="detail-check">Disc (if renewal)</div>
+          <div class="detail-check">Any special documentation (COR, letter of authority, etc.)</div>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted);">We review, compile everything, and submit to the DLTC the same day.</p>
+        </div>
+      </div>
+
+      <div class="detail-step">
+        <div class="detail-step-num">4</div>
+        <div>
+          <h4>✓ Step 4: Processing & Collection</h4>
+          <p>We track your application in real-time. You'll receive WhatsApp updates at each milestone:</p>
+          <div class="detail-check">Received at DLTC</div>
+          <div class="detail-check">Under processing</div>
+          <div class="detail-check">Ready for pickup</div>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted);">We arrange courier delivery to your address, or you can collect from our office. Balance is due on receipt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-inner">
+    <div class="faq-section">
+      <h3 class="faq-title">Frequently Asked Questions</h3>
+      
+      <div class="faq-item">
+        <div class="faq-q">How long does a renewal take?</div>
+        <div class="faq-a">Most renewals are completed within 5–10 working days from submission. Expedited requests may be available (contact us for details).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if my disc is already expired?</div>
+        <div class="faq-a">Don't panic — we handle expired discs regularly. However, there may be penalties. Contact us immediately to renew before fines increase further.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can you handle company vehicles?</div>
+        <div class="faq-a">Absolutely. For company vehicles, we'll need a BRNC (Business Registration Number Certificate), proxy ID, and proof of business address. We guide you through all of it.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Do you service all provinces?</div>
+        <div class="faq-a">Yes. We work with DLTCs across all South African provinces and can coordinate submissions from anywhere in the country.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What payment methods do you accept?</div>
+        <div class="faq-a">We accept bank transfers, EFT, debit/credit cards, and cash (at our office). 50% deposit is required upfront; balance due on completion.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I track my application online?</div>
+        <div class="faq-a">Currently, you'll receive WhatsApp updates from us. We're building a real-time tracker app — keep an eye on our Digital Tools page for launch date.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if there's an issue with my application?</div>
+        <div class="faq-a">We monitor everything closely. If an issue arises, we contact the DLTC and you immediately. We'll resolve it or propose next steps.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Do you offer a guarantee or refund?</div>
+        <div class="faq-a">We stand behind our work. If we make an error, we'll fix it at no extra charge. If the DLTC rejects an application due to our mistake, we refund our service fee.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA DIVIDER -->
+<div class="brand-divider">
+  <div class="divider-q">Q</div>
+  <div class="divider-content">
+    <div class="divider-title">Ready to Get Started?</div>
+    <div class="divider-sub">Let Us Handle the Hard Part</div>
+    <a href="https://wa.me/27842642299" class="divider-cta" target="_blank">WhatsApp Us Now</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Q4you <span>Kempton Licences</span></div>
+  <div style="margin-top:0.4rem">37B Mona Street, Glen Marais, Kempton Park · <a href="mailto:kempton.licences@gmail.com" style="color:rgba(255,255,255,0.5)">kempton.licences@gmail.com</a></div>
+  <div style="margin-top:0.5rem">© 2026 Q4you Kempton Licences · Fast · Professional · Hassle-Free</div>
+</footer>
+
+<a href="https://wa.me/27842642299" class="wa-fab" target="_blank" title="WhatsApp Us">💬</a>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    item.classList.toggle('active');
+  });
+});
+</script>
+</body>
+</html>

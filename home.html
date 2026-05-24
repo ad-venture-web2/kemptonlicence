@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q4you Kempton Licences – Fast, Professional & Hassle-Free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ── HERO ── */
+  .hero {
+    padding: 110px 5vw 90px;
+    background: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute;
+    top: -120px; right: -100px; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,43,122,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute;
+    bottom: -80px; left: -60px; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,107,90,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center;
+    position: relative; z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;
+  }
+  .people-icons { display: flex; align-items: flex-end; gap: -4px; }
+  .person-icon {
+    width: 22px; height: 28px;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .person-head {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .person-body {
+    width: 14px; height: 16px; border-radius: 7px 7px 0 0;
+  }
+  .p1 .person-head, .p1 .person-body { background: var(--teal); }
+  .p2 .person-head, .p2 .person-body { background: var(--green); width: 11px; height: 11px; }
+  .p2 .person-body { width: 16px; height: 18px; }
+  .p3 .person-head, .p3 .person-body { background: var(--purple-mid); }
+  .eyebrow-text {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 800;
+    font-size: clamp(2.5rem, 4.5vw, 4rem); line-height: 1.08;
+    color: var(--ink); margin-bottom: 0.5rem;
+  }
+  h1 em { font-style: italic; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted); line-height: 1.8;
+    max-width: 460px; margin: 1.25rem 0 2.25rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .hero-metrics {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .metric {
+    display: flex; flex-direction: column;
+  }
+  .metric-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;
+    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .metric-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; font-weight: 500; }
+
+  /* checker card */
+  .checker-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .checker-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--grad);
+  }
+  .checker-title {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+    font-size: 1.3rem; color: var(--ink); margin-bottom: 0.25rem;
+  }
+  .checker-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 0.9rem; }
+  .form-group label {
+    display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+  }
+  .form-group input, .form-group select {
+    width: 100%; padding: 10px 13px;
+    background: var(--cream); border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--ink); font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--teal); }
+  .form-group input::placeholder { color: var(--muted); }
+  .check-btn {
+    width: 100%; padding: 12px;
+    background: var(--grad); color: var(--white);
+    font-weight: 600; font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+    border: none; border-radius: 99px; cursor: pointer; margin-top: 0.25rem;
+    transition: opacity 0.2s; box-shadow: 0 4px 14px rgba(61,43,122,0.2);
+  }
+  .check-btn:hover { opacity: 0.9; }
+  .panel-result {
+    display: none; margin-top: 0.9rem; padding: 12px 15px;
+    border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 500; line-height: 1.5;
+  }
+  .panel-result.warn { background: #fff4e5; border: 1px solid #f0a040; color: #8a5a00; }
+  .panel-result.good { background: var(--green-pale); border: 1px solid #81c784; color: #1b5e20; }
+  .panel-result.expired { background: #fdecea; border: 1px solid #ef9a9a; color: #7f0000; }
+
+  /* Achievements section */
+  #achievements { background: var(--white); }
+  .achievements-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem; margin-top: 2.5rem;
+  }
+  .achievement-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    text-align: center; transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .achievement-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .achievement-icon {
+    font-size: 2.2rem; margin-bottom: 0.75rem;
+  }
+  .achievement-num {
+    font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700;
+    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.25rem;
+  }
+  .achievement-label { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* Section styles moved to shared.css but we include overrides here */
+  section { padding: 90px 5vw; }
+  .section-inner { max-width: 1180px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 0.75rem;
+  }
+  .section-tag::before { content: ''; width: 20px; height: 2px; background: var(--teal); flex-shrink: 0; }
+  h2 {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1.15;
+    color: var(--ink); margin-bottom: 0.75rem;
+  }
+  h2 em { font-style: italic; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .section-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.8; max-width: 520px; margin-bottom: 3rem; }
+
+  @media (max-width: 780px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-metrics { flex-direction: column; gap: 1.5rem; }
+    .achievements-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="home.html" class="nav-logo">
+    <div class="q-mark">
+      <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="qgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3d2b7a"/>
+            <stop offset="100%" stop-color="#1a6b5a"/>
+          </linearGradient>
+        </defs>
+        <text x="2" y="44" font-family="Georgia, serif" font-size="50" font-weight="700" font-style="italic" fill="url(#qgrad)">Q</text>
+        <text x="14" y="28" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#2e7d32">4</text>
+        <text x="10" y="37" font-family="Arial, sans-serif" font-size="6.5" fill="#1a6b5a">you</text>
+        <circle cx="26" cy="16" r="3" fill="#2e7d32"/>
+        <circle cx="33" cy="14" r="3.5" fill="#1a6b5a"/>
+        <circle cx="40" cy="16" r="3" fill="#3d2b7a"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-q4">Q4you</div>
+      <div class="logo-name">Kempton Licences</div>
+      <div class="logo-sub">Vehicle Licensing Agents</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="home.html" class="active">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="digital-tools.html">Digital Tools</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/27842642299" class="nav-cta" target="_blank">📱 WhatsApp Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">
+        <div class="people-icons">
+          <div class="person-icon p1"><div class="person-head"></div><div class="person-body"></div></div>
+          <div class="person-icon p2"><div class="person-head"></div><div class="person-body"></div></div>
+          <div class="person-icon p3"><div class="person-head"></div><div class="person-body"></div></div>
+        </div>
+        <span class="eyebrow-text">Q4you — We Queue So You Don't</span>
+      </div>
+      <h1>Vehicle Licensing,<br><em>Done For You</em></h1>
+      <p class="hero-sub">
+        Let <strong>Q4you Kempton Licences</strong> take the stress out of vehicle licensing &amp; registrations. Fast, professional &amp; hassle-free — <strong>serving Kempton Park since 2017</strong>.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/27842642299" class="btn-primary" target="_blank">📱 WhatsApp Us Now</a>
+        <a href="services.html" class="btn-outline">Our Services</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric">
+          <div class="metric-num">9</div>
+          <div class="metric-label">Years of Service</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">Zero</div>
+          <div class="metric-label">Queues for You</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">Fast</div>
+          <div class="metric-label">Turnaround</div>
+        </div>
+      </div>
+    </div>
+    <div class="checker-card">
+      <div class="checker-title">🔎 Renewal Checker</div>
+      <div class="checker-sub">Find out if your disc is due — instantly</div>
+      <div class="form-group">
+        <label>Disc Expiry Month</label>
+        <select id="exp-month">
+          <option value="">— Select month —</option>
+          <option>January</option><option>February</option><option>March</option>
+          <option>April</option><option>May</option><option>June</option>
+          <option>July</option><option>August</option><option>September</option>
+          <option>October</option><option>November</option><option>December</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Expiry Year</label>
+        <select id="exp-year">
+          <option>2024</option><option>2025</option><option selected>2026</option><option>2027</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Registration Number (optional)</label>
+        <input type="text" placeholder="e.g. CA 123 GP" id="reg-num">
+      </div>
+      <button class="check-btn" onclick="checkRenewal()">Check My Status →</button>
+      <div id="check-result" class="panel-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-inner">
+    <p class="section-tag">Our Impact</p>
+    <h2>Trusted By Thousands<br><em>Across Kempton Park</em></h2>
+    <p class="section-desc">Q4you has become the go-to vehicle licensing partner for individuals and businesses who value their time.</p>
+    <div class="achievements-grid">
+      <div class="achievement-card">
+        <div class="achievement-icon">🔄</div>
+        <div class="achievement-num">500+</div>
+        <div class="achievement-label">Licences Renewed<br>Under Zero Queues for You</div>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">🚗</div>
+        <div class="achievement-num">800+</div>
+        <div class="achievement-label">Vehicle Registrations<br>Under Fast Turnaround</div>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">📋</div>
+        <div class="achievement-num">600+</div>
+        <div class="achievement-label">Traffic Registration<br>Certificates</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DIVIDER -->
+<div class="brand-divider">
+  <div class="divider-q">Q</div>
+  <div class="divider-content">
+    <div class="divider-title">Ready to Skip The Queue?</div>
+    <div class="divider-sub">Fast · Professional · Hassle-Free · Kempton Park</div>
+    <a href="https://wa.me/27842642299" class="divider-cta" target="_blank">Start Your Renewal on WhatsApp</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Q4you <span>Kempton Licences</span></div>
+  <div style="margin-top:0.4rem">37B Mona Street, Glen Marais, Kempton Park &nbsp;·&nbsp; <a href="mailto:kempton.licences@gmail.com" style="color:rgba(255,255,255,0.5)">kempton.licences@gmail.com</a></div>
+  <div style="margin-top:0.5rem">© 2026 Q4you Kempton Licences · Fast · Professional · Hassle-Free</div>
+</footer>
+
+<a href="https://wa.me/27842642299" class="wa-fab" target="_blank" title="WhatsApp Us">💬</a>
+
+<script>
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function checkRenewal() {
+  const mo = document.getElementById('exp-month').value;
+  const yr = parseInt(document.getElementById('exp-year').value);
+  const res = document.getElementById('check-result');
+  if (!mo) {
+    res.style.display = 'block'; res.className = 'panel-result warn';
+    res.textContent = 'Please select your expiry month first.'; return;
+  }
+  const now = new Date();
+  const expDate = new Date(yr, MONTHS.indexOf(mo) + 1, 0);
+  const diff = Math.floor((expDate - now) / 86400000);
+  res.style.display = 'block';
+  if (diff < 0) {
+    res.className = 'panel-result expired';
+    res.textContent = '⚠️ Your disc has EXPIRED. Penalties may apply — contact us immediately to renew before fines increase.';
+  } else if (diff <= 30) {
+    res.className = 'panel-result warn';
+    res.textContent = `⚡ Expiring in ${diff} day${diff===1?'':'s'}! WhatsApp us now to start your renewal before fines apply.`;
+  } else {
+    res.className = 'panel-result good';
+    res.textContent = `✓ Still valid for approximately ${diff} days. Register for a free reminder and we'll alert you when it's time.`;
+  }
+}
+</script>
+</body>
+</html>
