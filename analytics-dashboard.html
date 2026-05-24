@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Analytics Dashboard — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <style>
+    .wrap{max-width:1200px;margin:6rem auto;padding:2rem}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+    .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-bottom:2rem}
+    .metric-card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow);border-left:4px solid var(--teal)}
+    .metric-value{font-size:2rem;font-weight:700;color:var(--teal)}
+    .metric-label{color:var(--muted);font-size:0.9rem;margin-top:0.5rem}
+    .charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:2rem;margin-bottom:2rem}
+    .chart-container{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow)}
+    .chart-title{font-weight:700;margin-bottom:1rem;color:var(--ink)}
+    select,input{padding:8px 12px;border-radius:8px;border:1px solid #e6e6e6}
+    .btn-export{padding:10px 16px;background:var(--grad);color:#fff;border:none;border-radius:8px;cursor:pointer}
+    .summary-table{width:100%;border-collapse:collapse;margin-top:1rem}
+    .summary-table th,.summary-table td{padding:10px;border-bottom:1px solid #f2f2f2;text-align:left}
+    .summary-table th{background:var(--cream);font-weight:700}
+    .status-badge{display:inline-block;padding:4px 8px;border-radius:4px;font-size:0.8rem;font-weight:600}
+    .status-good{background:#e8f5e9;color:#2e7d32}
+    .status-warning{background:#fff3e0;color:#cc8800}
+    .status-critical{background:#ffebee;color:#b00020}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal);font-weight:700">Q4you Analytics</a>
+  </nav>
+  
+  <main class="wrap">
+    <div class="header">
+      <div>
+        <h1 style="margin:0">Analytics Dashboard</h1>
+        <p style="color:var(--muted);margin-top:0.5rem">Real-time metrics and performance insights</p>
+      </div>
+      <div>
+        <select id="dateRange" onchange="updateAnalytics()">
+          <option value="7">Last 7 Days</option>
+          <option value="30" selected>Last 30 Days</option>
+          <option value="90">Last 90 Days</option>
+          <option value="365">Last Year</option>
+        </select>
+        <button class="btn-export" onclick="exportReport()" style="margin-left:10px">📥 Export Report</button>
+      </div>
+    </div>
+
+    <!-- KEY METRICS -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value" id="totalApps">142</div>
+        <div class="metric-label">Total Applications</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="avgTurnaround">3.2</div>
+        <div class="metric-label">Avg. Turnaround (days)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="completionRate">94%</div>
+        <div class="metric-label">Completion Rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="totalRevenue">R 18,250</div>
+        <div class="metric-label">Total Revenue</div>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-grid">
+      <div class="chart-container">
+        <div class="chart-title">Applications by Service</div>
+        <canvas id="serviceChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Application Status Distribution</div>
+        <canvas id="statusChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Daily Application Volume</div>
+        <canvas id="volumeChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Turnaround Time Trend</div>
+        <canvas id="turnaroundChart"></canvas>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE SUMMARY TABLE -->
+    <div style="background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow)">
+      <h2 style="margin-top:0">Performance Summary</h2>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Current Period</th>
+            <th>Previous Period</th>
+            <th>Change</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Applications Processed</strong></td>
+            <td>142</td>
+            <td>128</td>
+            <td>+11%</td>
+            <td><span class="status-badge status-good">↑ Good</span></td>
+          </tr>
+          <tr>
+            <td><strong>Average Turnaround Time</strong></td>
+            <td>3.2 days</td>
+            <td>3.8 days</td>
+            <td>-16%</td>
+            <td><span class="status-badge status-good">↓ Improved</span></td>
+          </tr>
+          <tr>
+            <td><strong>Document Errors</strong></td>
+            <td>8</td>
+            <td>12</td>
+            <td>-33%</td>
+            <td><span class="status-badge status-good">↓ Good</span></td>
+          </tr>
+          <tr>
+            <td><strong>Payment Processing Time</strong></td>
+            <td>2.1 hours</td>
+            <td>2.8 hours</td>
+            <td>-25%</td>
+            <td><span class="status-badge status-good">↓ Better</span></td>
+          </tr>
+          <tr>
+            <td><strong>Customer Satisfaction</strong></td>
+            <td>4.7/5.0</td>
+            <td>4.5/5.0</td>
+            <td>+4%</td>
+            <td><span class="status-badge status-good">↑ Excellent</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    // Mock data generation
+    function generateMockData() {
+      const services = ['Renewal', 'Registration', 'TRC', 'Authority', 'Other'];
+      const statuses = ['Received', 'Submitted', 'Processing', 'Ready to Collect'];
+      
+      return {
+        totalApps: Math.floor(Math.random() * 50) + 120,
+        avgTurnaround: (Math.random() * 2 + 2.5).toFixed(1),
+        completionRate: Math.floor(Math.random() * 10) + 90,
+        totalRevenue: Math.floor(Math.random() * 5000 + 15000),
+        serviceBreakdown: [35, 28, 22, 15],
+        statusBreakdown: [15, 25, 35, 25],
+        dailyVolume: Array.from({length: 7}, () => Math.floor(Math.random() * 30 + 10))
+      };
+    }
+
+    function updateAnalytics() {
+      const data = generateMockData();
+      document.getElementById('totalApps').textContent = data.totalApps;
+      document.getElementById('avgTurnaround').textContent = data.avgTurnaround;
+      document.getElementById('completionRate').textContent = data.completionRate + '%';
+      document.getElementById('totalRevenue').textContent = 'R ' + data.totalRevenue.toLocaleString();
+      
+      updateCharts(data);
+    }
+
+    function updateCharts(data) {
+      // Service breakdown chart
+      const serviceCtx = document.getElementById('serviceChart');
+      new Chart(serviceCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Renewal', 'Registration', 'TRC', 'Authority'],
+          datasets: [{
+            data: data.serviceBreakdown,
+            backgroundColor: ['#3d2b7a', '#1a6b5a', '#0b8043', '#cc8800']
+          }]
+        },
+        options: {responsive: true, maintainAspectRatio: true}
+      });
+
+      // Status distribution
+      const statusCtx = document.getElementById('statusChart');
+      new Chart(statusCtx, {
+        type: 'pie',
+        data: {
+          labels: ['Received', 'Submitted', 'Processing', 'Ready'],
+          datasets: [{
+            data: data.statusBreakdown,
+            backgroundColor: ['#e6f2f7', '#b3e5fc', '#4fc3f7', '#0288d1']
+          }]
+        },
+        options: {responsive: true, maintainAspectRatio: true}
+      });
+
+      // Daily volume
+      const volumeCtx = document.getElementById('volumeChart');
+      new Chart(volumeCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Applications',
+            data: data.dailyVolume,
+            backgroundColor: '#3d2b7a'
+          }]
+        },
+        options: {responsive: true, maintainAspectRatio: true, plugins: {legend: {display: false}}}
+      });
+
+      // Turnaround trend
+      const turnaroundCtx = document.getElementById('turnaroundChart');
+      new Chart(turnaroundCtx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [{
+            label: 'Avg Days',
+            data: [4.2, 3.8, 3.5, 3.2],
+            borderColor: '#1a6b5a',
+            backgroundColor: 'rgba(26,107,90,0.1)',
+            tension: 0.4
+          }]
+        },
+        options: {responsive: true, maintainAspectRatio: true}
+      });
+    }
+
+    function exportReport() {
+      const csv = 'Analytics Report\n' +
+        new Date().toLocaleString() + '\n\n' +
+        'Total Applications: 142\n' +
+        'Avg Turnaround: 3.2 days\n' +
+        'Completion Rate: 94%\n' +
+        'Total Revenue: R 18,250\n';
+      
+      const blob = new Blob([csv], {type: 'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'analytics-report-' + new Date().getTime() + '.csv';
+      a.click();
+    }
+
+    // Initialize
+    updateAnalytics();
+  </script>
+</body>
+</html>

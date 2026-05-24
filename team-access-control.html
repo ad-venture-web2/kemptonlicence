@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Team Access Control — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .wrap{max-width:1200px;margin:6rem auto;padding:2rem}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+    .btn-primary{padding:10px 16px;background:var(--grad);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+    .tabs{display:flex;gap:10px;border-bottom:2px solid var(--border);margin-bottom:2rem}
+    .tab-btn{padding:12px 16px;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-weight:600;color:var(--muted)}
+    .tab-btn.active{color:var(--teal);border-bottom-color:var(--teal)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+    .members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-bottom:2rem}
+    .member-card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow);border-left:4px solid var(--teal)}
+    .member-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+    .member-name{font-weight:700;font-size:1.1rem;color:var(--ink)}
+    .member-role{font-size:0.9rem;color:var(--muted);margin-top:0.25rem}
+    .member-status{display:inline-block;padding:4px 8px;border-radius:4px;font-size:0.8rem;font-weight:600}
+    .status-active{background:#e8f5e9;color:#2e7d32}
+    .status-inactive{background:#f5f5f5;color:#666}
+    .status-pending{background:#fff3e0;color:#f57c00}
+    .permissions-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:1rem 0;font-size:0.9rem}
+    .permission-item{display:flex;align-items:center;gap:6px}
+    .permission-check{color:var(--teal);font-weight:700}
+    .permission-cross{color:#d32f2f;font-weight:700}
+    .member-actions{display:flex;gap:8px;margin-top:1rem}
+    .btn-action{padding:6px 12px;font-size:0.85rem;background:var(--cream);border:1px solid var(--border);border-radius:6px;cursor:pointer}
+    .btn-action:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+    .table-wrapper{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow);margin-bottom:2rem}
+    table{width:100%;border-collapse:collapse;margin-top:1rem}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid #f2f2f2}
+    th{background:var(--cream);font-weight:700}
+    .role-badge{display:inline-block;padding:6px 12px;border-radius:4px;font-size:0.85rem;font-weight:600}
+    .role-admin{background:#ffebee;color:#b00020}
+    .role-manager{background:#e3f2fd;color:#1976d2}
+    .role-operator{background:#f3e5f5;color:#7b1fa2}
+    .role-viewer{background:#f5f5f5;color:#666}
+    .form-group{margin-bottom:1.5rem}
+    .form-group label{display:block;font-weight:600;font-size:0.9rem;margin-bottom:6px;color:var(--ink)}
+    input,select,textarea{width:100%;padding:10px;border:1px solid #e6e6e6;border-radius:8px;font-family:inherit}
+    .modal-form{background:#fff;border-radius:12px;padding:2rem;box-shadow:var(--shadow);max-width:500px;margin:0 auto}
+    .checkbox-group{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:1rem}
+    .checkbox-item{display:flex;align-items:center;gap:8px}
+    .checkbox-item input{width:auto}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal);font-weight:700">Q4you Team Control</a>
+  </nav>
+
+  <main class="wrap">
+    <div class="header">
+      <div>
+        <h1 style="margin:0">Team Access Control</h1>
+        <p style="color:var(--muted);margin-top:0.5rem">Manage user permissions and role-based access</p>
+      </div>
+      <button class="btn-primary" onclick="showAddMemberForm()">+ Add Team Member</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('members')">Team Members</button>
+      <button class="tab-btn" onclick="switchTab('roles')">Roles & Permissions</button>
+      <button class="tab-btn" onclick="switchTab('activity')">Access Activity</button>
+    </div>
+
+    <!-- TAB 1: TEAM MEMBERS -->
+    <div id="members" class="tab-content active">
+      <div class="members-grid">
+        <!-- ADMIN -->
+        <div class="member-card" style="border-left-color:#b00020">
+          <div class="member-header">
+            <div>
+              <div class="member-name">Gavin Smith</div>
+              <div class="member-role">gavin@q4you.co.za</div>
+            </div>
+            <span class="member-status status-active">Active</span>
+          </div>
+          <div style="font-weight:600;color:#b00020;margin-bottom:0.75rem">
+            <span class="role-badge role-admin">Admin</span>
+          </div>
+          <div class="permissions-list">
+            <div class="permission-item"><span class="permission-check">✓</span> View All</div>
+            <div class="permission-item"><span class="permission-check">✓</span> Edit All</div>
+            <div class="permission-item"><span class="permission-check">✓</span> Delete</div>
+            <div class="permission-item"><span class="permission-check">✓</span> Reports</div>
+            <div class="permission-item"><span class="permission-check">✓</span> User Mgmt</span>
+            <div class="permission-item"><span class="permission-check">✓</span> Settings</div>
+          </div>
+          <div class="member-actions">
+            <button class="btn-action" onclick="editMember('gavin')">Edit</button>
+            <button class="btn-action" onclick="viewActivity('gavin')">Activity</button>
+          </div>
+        </div>
+
+        <!-- MANAGER -->
+        <div class="member-card" style="border-left-color:#1976d2">
+          <div class="member-header">
+            <div>
+              <div class="member-name">Sarah Johnson</div>
+              <div class="member-role">sarah@q4you.co.za</div>
+            </div>
+            <span class="member-status status-active">Active</span>
+          </div>
+          <div style="font-weight:600;color:#1976d2;margin-bottom:0.75rem">
+            <span class="role-badge role-manager">Manager</span>
+          </div>
+          <div class="permissions-list">
+            <div class="permission-item"><span class="permission-check">✓</span> View All</div>
+            <div class="permission-item"><span class="permission-check">✓</span> Edit Applications</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Delete</div>
+            <div class="permission-item"><span class="permission-check">✓</span> Reports</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> User Mgmt</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Settings</div>
+          </div>
+          <div class="member-actions">
+            <button class="btn-action" onclick="editMember('sarah')">Edit</button>
+            <button class="btn-action" onclick="viewActivity('sarah')">Activity</button>
+          </div>
+        </div>
+
+        <!-- OPERATOR -->
+        <div class="member-card" style="border-left-color:#7b1fa2">
+          <div class="member-header">
+            <div>
+              <div class="member-name">Michael Chen</div>
+              <div class="member-role">michael@q4you.co.za</div>
+            </div>
+            <span class="member-status status-active">Active</span>
+          </div>
+          <div style="font-weight:600;color:#7b1fa2;margin-bottom:0.75rem">
+            <span class="role-badge role-operator">Operator</span>
+          </div>
+          <div class="permissions-list">
+            <div class="permission-item"><span class="permission-check">✓</span> View All</div>
+            <div class="permission-item"><span class="permission-check">✓</span> Update Status</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Delete</div>
+            <div class="permission-item"><span class="permission-check">✓</span> View Reports</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> User Mgmt</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Settings</div>
+          </div>
+          <div class="member-actions">
+            <button class="btn-action" onclick="editMember('michael')">Edit</button>
+            <button class="btn-action" onclick="viewActivity('michael')">Activity</button>
+          </div>
+        </div>
+
+        <!-- VIEWER -->
+        <div class="member-card" style="border-left-color:#666">
+          <div class="member-header">
+            <div>
+              <div class="member-name">Emily Parker</div>
+              <div class="member-role">emily@q4you.co.za</div>
+            </div>
+            <span class="member-status status-active">Active</span>
+          </div>
+          <div style="font-weight:600;color:#666;margin-bottom:0.75rem">
+            <span class="role-badge role-viewer">Viewer</span>
+          </div>
+          <div class="permissions-list">
+            <div class="permission-item"><span class="permission-check">✓</span> View All</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Edit</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Delete</div>
+            <div class="permission-item"><span class="permission-check">✓</span> View Reports</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> User Mgmt</div>
+            <div class="permission-item"><span class="permission-cross">✗</span> Settings</div>
+          </div>
+          <div class="member-actions">
+            <button class="btn-action" onclick="editMember('emily')">Edit</button>
+            <button class="btn-action" onclick="viewActivity('emily')">Activity</button>
+          </div>
+        </div>
+
+        <!-- PENDING -->
+        <div class="member-card" style="border-left-color:#f57c00">
+          <div class="member-header">
+            <div>
+              <div class="member-name">David Wilson</div>
+              <div class="member-role">david@q4you.co.za</div>
+            </div>
+            <span class="member-status status-pending">Pending</span>
+          </div>
+          <div style="font-weight:600;color:#f57c00;margin-bottom:0.75rem">
+            <span class="role-badge" style="background:#fff3e0;color:#f57c00">Invited</span>
+          </div>
+          <p style="font-size:0.9rem;color:var(--muted);margin:0.75rem 0">Invitation sent. Awaiting acceptance.</p>
+          <div class="member-actions">
+            <button class="btn-action" onclick="resendInvite('david')">Resend</button>
+            <button class="btn-action" onclick="removeMember('david')">Remove</button>
+          </div>
+        </div>
+
+        <!-- INACTIVE -->
+        <div class="member-card" style="border-left-color:#ccc">
+          <div class="member-header">
+            <div>
+              <div class="member-name">Jessica Brown</div>
+              <div class="member-role">jessica@q4you.co.za</div>
+            </div>
+            <span class="member-status status-inactive">Inactive</span>
+          </div>
+          <div style="font-weight:600;color:#666;margin-bottom:0.75rem">
+            <span class="role-badge role-viewer">Viewer</span>
+          </div>
+          <p style="font-size:0.9rem;color:var(--muted);margin:0.75rem 0">Last active: 45 days ago</p>
+          <div class="member-actions">
+            <button class="btn-action" onclick="activateMember('jessica')">Activate</button>
+            <button class="btn-action" onclick="removeMember('jessica')">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ROLES & PERMISSIONS -->
+    <div id="roles" class="tab-content">
+      <div class="table-wrapper">
+        <h2 style="margin-top:0">Role Definitions</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Description</th>
+              <th>Key Permissions</th>
+              <th>Members</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="role-badge role-admin">Admin</span></td>
+              <td>Full system access and administration</td>
+              <td>All permissions</td>
+              <td>1</td>
+              <td><button class="btn-action" onclick="editRole('admin')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><span class="role-badge role-manager">Manager</span></td>
+              <td>Manage applications and team operations</td>
+              <td>View, Edit, Reports</td>
+              <td>1</td>
+              <td><button class="btn-action" onclick="editRole('manager')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><span class="role-badge role-operator">Operator</span></td>
+              <td>Process applications and update statuses</td>
+              <td>View, Update Status, View Reports</td>
+              <td>1</td>
+              <td><button class="btn-action" onclick="editRole('operator')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><span class="role-badge role-viewer">Viewer</span></td>
+              <td>View-only access to applications and reports</td>
+              <td>View, View Reports</td>
+              <td>2</td>
+              <td><button class="btn-action" onclick="editRole('viewer')">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper">
+        <h2 style="margin-top:0">Available Permissions</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Description</th>
+              <th>Admin</th>
+              <th>Manager</th>
+              <th>Operator</th>
+              <th>Viewer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>View Applications</strong></td>
+              <td>Browse and search all applications</td>
+              <td>✓</td><td>✓</td><td>✓</td><td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>Edit Applications</strong></td>
+              <td>Modify application details</td>
+              <td>✓</td><td>✓</td><td>✗</td><td>✗</td>
+            </tr>
+            <tr>
+              <td><strong>Update Status</strong></td>
+              <td>Change application status</td>
+              <td>✓</td><td>✓</td><td>✓</td><td>✗</td>
+            </tr>
+            <tr>
+              <td><strong>Delete Applications</strong></td>
+              <td>Remove applications permanently</td>
+              <td>✓</td><td>✗</td><td>✗</td><td>✗</td>
+            </tr>
+            <tr>
+              <td><strong>View Reports</strong></td>
+              <td>Access analytics and compliance reports</td>
+              <td>✓</td><td>✓</td><td>✓</td><td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>Generate Reports</strong></td>
+              <td>Create custom reports</td>
+              <td>✓</td><td>✓</td><td>✗</td><td>✗</td>
+            </tr>
+            <tr>
+              <td><strong>Manage Users</strong></td>
+              <td>Add, remove, and edit team members</td>
+              <td>✓</td><td>✗</td><td>✗</td><td>✗</td>
+            </tr>
+            <tr>
+              <td><strong>System Settings</strong></td>
+              <td>Configure system preferences</td>
+              <td>✓</td><td>✗</td><td>✗</td><td>✗</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: ACCESS ACTIVITY -->
+    <div id="activity" class="tab-content">
+      <div class="table-wrapper">
+        <h2 style="margin-top:0">Recent Access Activity</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Action</th>
+              <th>Details</th>
+              <th>Timestamp</th>
+              <th>IP Address</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Gavin Smith</strong></td>
+              <td>Login</td>
+              <td>Admin dashboard access</td>
+              <td>May 22, 2:45 PM</td>
+              <td>192.168.1.100</td>
+              <td><span class="role-badge" style="background:#e8f5e9;color:#2e7d32">✓ Success</span></td>
+            </tr>
+            <tr>
+              <td><strong>Sarah Johnson</strong></td>
+              <td>Edit Application</td>
+              <td>Updated KL-20264812 status to Processing</td>
+              <td>May 22, 2:30 PM</td>
+              <td>192.168.1.101</td>
+              <td><span class="role-badge" style="background:#e8f5e9;color:#2e7d32">✓ Success</span></td>
+            </tr>
+            <tr>
+              <td><strong>Michael Chen</strong></td>
+              <td>View Report</td>
+              <td>Accessed May analytics dashboard</td>
+              <td>May 22, 1:15 PM</td>
+              <td>192.168.1.102</td>
+              <td><span class="role-badge" style="background:#e8f5e9;color:#2e7d32">✓ Success</span></td>
+            </tr>
+            <tr>
+              <td><strong>Emily Parker</strong></td>
+              <td>Login</td>
+              <td>Viewer portal access</td>
+              <td>May 22, 10:30 AM</td>
+              <td>192.168.1.103</td>
+              <td><span class="role-badge" style="background:#e8f5e9;color:#2e7d32">✓ Success</span></td>
+            </tr>
+            <tr>
+              <td><strong>Unknown</strong></td>
+              <td>Login Attempt</td>
+              <td>Failed authentication (invalid password)</td>
+              <td>May 21, 11:20 PM</td>
+              <td>203.0.113.45</td>
+              <td><span class="role-badge" style="background:#ffebee;color:#b00020">✗ Failed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper">
+        <h2 style="margin-top:0">Session Management</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Session ID</th>
+              <th>Login Time</th>
+              <th>Last Activity</th>
+              <th>Device</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Gavin Smith</strong></td>
+              <td style="font-family:monospace;font-size:0.8rem">a7f3e5c2...</td>
+              <td>May 22, 2:45 PM</td>
+              <td>May 22, 2:50 PM</td>
+              <td>Desktop (Windows)</td>
+              <td><button class="btn-action" onclick="endSession()">End Session</button></td>
+            </tr>
+            <tr>
+              <td><strong>Sarah Johnson</strong></td>
+              <td style="font-family:monospace;font-size:0.8rem">b9d4f1a6...</td>
+              <td>May 22, 1:20 PM</td>
+              <td>May 22, 2:32 PM</td>
+              <td>Desktop (Mac)</td>
+              <td><button class="btn-action" onclick="endSession()">End Session</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function showAddMemberForm() {
+      alert('Add member form dialog opening...');
+    }
+
+    function editMember(memberName) {
+      alert('Edit ' + memberName + ' dialog opening...');
+    }
+
+    function viewActivity(memberName) {
+      alert('Viewing activity for ' + memberName);
+      document.querySelector('[onclick*="switchTab"]').click();
+      switchTab('activity');
+    }
+
+    function removeMember(memberName) {
+      if (confirm('Remove ' + memberName + ' from team?')) {
+        alert('Member removed (prototype)');
+      }
+    }
+
+    function activateMember(memberName) {
+      alert('Activating ' + memberName + '...');
+    }
+
+    function resendInvite(memberName) {
+      alert('Invitation resent to ' + memberName);
+    }
+
+    function editRole(roleName) {
+      alert('Edit role: ' + roleName);
+    }
+
+    function endSession() {
+      alert('Ending session...');
+    }
+  </script>
+</body>
+</html>

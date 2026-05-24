@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Barcode & QR System — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    .wrap{max-width:1200px;margin:6rem auto;padding:2rem}
+    .header{margin-bottom:2rem}
+    .generator-section{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem}
+    .generator-card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow)}
+    .generator-card h3{margin-top:0;color:var(--ink)}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;font-weight:600;font-size:0.9rem;margin-bottom:4px;color:var(--muted)}
+    input,select,textarea{width:100%;padding:10px;border:1px solid #e6e6e6;border-radius:8px;font-family:inherit}
+    .btn-primary{padding:10px 16px;background:var(--grad);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+    .preview-box{background:var(--cream);border:2px dashed var(--border);border-radius:8px;padding:1.5rem;text-align:center;min-height:200px;display:flex;align-items:center;justify-content:center}
+    .barcode-preview{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .qr-preview{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .code-value{font-family:monospace;font-size:0.9rem;color:var(--muted);word-break:break-all}
+    .export-controls{display:flex;gap:10px;margin-top:1rem}
+    .btn-export{padding:8px 12px;font-size:0.85rem;background:var(--cream);border:1px solid var(--border);border-radius:6px;cursor:pointer}
+    .btn-export:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+    .batch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem}
+    .code-item{background:var(--cream);border-radius:8px;padding:1rem;text-align:center;border:1px solid var(--border)}
+    .code-item-value{font-family:monospace;font-size:0.8rem;margin:0.5rem 0;color:var(--ink)}
+    .code-item-preview{background:#fff;padding:0.75rem;border-radius:4px;margin:0.75rem 0;min-height:80px;display:flex;align-items:center;justify-content:center}
+    .history-table{width:100%;border-collapse:collapse;margin-top:1rem}
+    .history-table th,.history-table td{padding:10px;text-align:left;border-bottom:1px solid #f2f2f2}
+    .history-table th{background:var(--cream);font-weight:700}
+    .badge{display:inline-block;padding:4px 8px;border-radius:4px;font-size:0.8rem;font-weight:600}
+    .badge-barcode{background:#e3f2fd;color:#1976d2}
+    .badge-qr{background:#f3e5f5;color:#7b1fa2}
+    .badge-batch{background:#e8f5e9;color:#388e3c}
+    @media(max-width:900px){
+      .generator-section{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal);font-weight:700">Q4you Barcode & QR</a>
+  </nav>
+
+  <main class="wrap">
+    <div class="header">
+      <h1 style="margin:0">Barcode & QR System</h1>
+      <p style="color:var(--muted);margin-top:0.5rem">Generate tracking codes for applications and documents</p>
+    </div>
+
+    <!-- GENERATOR SECTION -->
+    <div class="generator-section">
+      <!-- BARCODE GENERATOR -->
+      <div class="generator-card">
+        <h3>🔢 Barcode Generator</h3>
+        <div class="form-group">
+          <label>Reference ID</label>
+          <input type="text" id="barcodeValue" placeholder="KL-20264812" value="KL-20264812">
+        </div>
+        <div class="form-group">
+          <label>Format</label>
+          <select id="barcodeFormat">
+            <option>CODE128</option>
+            <option>EAN13</option>
+            <option>UPC</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="generateBarcode()" style="width:100%">Generate Barcode</button>
+        
+        <div class="preview-box">
+          <div class="barcode-preview">
+            <svg id="barcodePreview"></svg>
+            <div class="code-value" id="barcodeDisplayValue">KL-20264812</div>
+          </div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn-export" onclick="downloadBarcode('png')">📥 PNG</button>
+          <button class="btn-export" onclick="downloadBarcode('pdf')">📥 PDF</button>
+          <button class="btn-export" onclick="copyBarcode()">📋 Copy Code</button>
+          <button class="btn-export" onclick="printBarcode()">🖨️ Print</button>
+        </div>
+      </div>
+
+      <!-- QR CODE GENERATOR -->
+      <div class="generator-card">
+        <h3>📱 QR Code Generator</h3>
+        <div class="form-group">
+          <label>Encode Data</label>
+          <textarea id="qrValue" rows="4" placeholder="Enter application reference&#10;KL-20264812&#10;&#10;Or full URL for tracking page">KL-20264812</textarea>
+        </div>
+        <div class="form-group">
+          <label>Size</label>
+          <select id="qrSize">
+            <option value="150">Small (150px)</option>
+            <option value="250" selected>Medium (250px)</option>
+            <option value="350">Large (350px)</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="generateQR()" style="width:100%">Generate QR Code</button>
+        
+        <div class="preview-box">
+          <div class="qr-preview">
+            <div id="qrPreview" style="background:#fff;padding:10px;border-radius:8px"></div>
+            <div class="code-value" id="qrDisplayValue" style="max-height:60px;overflow-y:auto">KL-20264812</div>
+          </div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn-export" onclick="downloadQR('png')">📥 PNG</button>
+          <button class="btn-export" onclick="downloadQR('pdf')">📥 PDF</button>
+          <button class="btn-export" onclick="copyQR()">📋 Copy Data</button>
+          <button class="btn-export" onclick="printQR()">🖨️ Print</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCH GENERATION -->
+    <div style="background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow);margin-bottom:2rem">
+      <h2 style="margin-top:0">Batch Generation</h2>
+      <p style="color:var(--muted)">Generate codes for multiple applications at once</p>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+        <div class="form-group">
+          <label>Select Applications</label>
+          <select id="applicationSelect" multiple style="height:120px">
+            <option selected>KL-20264812 (Renewal - John Smith)</option>
+            <option selected>KL-20264813 (Registration - Jane Doe)</option>
+            <option>KL-20264814 (TRC - ABC Corp)</option>
+            <option>KL-20264815 (Authority - XYZ Ltd)</option>
+            <option>KL-20264816 (Renewal - Mike Johnson)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Code Type</label>
+          <select id="batchCodeType">
+            <option value="barcode">Barcode (CODE128)</option>
+            <option value="qr">QR Code</option>
+            <option value="both">Both (Barcode + QR)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="generateBatch()" style="width:100%;margin-bottom:1.5rem">Generate Batch</button>
+
+      <div id="batchResults" class="batch-grid"></div>
+      <div style="margin-top:1.5rem;display:flex;gap:10px">
+        <button class="btn-export" onclick="downloadBatch('pdf')" style="flex:1">📥 Download All as PDF</button>
+        <button class="btn-export" onclick="downloadBatch('zip')" style="flex:1">📥 Download All as ZIP</button>
+      </div>
+    </div>
+
+    <!-- CODE HISTORY -->
+    <div style="background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow)">
+      <h2 style="margin-top:0">Code History</h2>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Reference ID</th>
+            <th>Type</th>
+            <th>Application</th>
+            <th>Generated</th>
+            <th>Status</th>
+            <th>Scans</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>KL-20264812</strong></td>
+            <td><span class="badge badge-qr">QR</span></td>
+            <td>Renewal - John Smith</td>
+            <td>May 22, 2026</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td>
+            <td>12</td>
+            <td><button class="btn-export" onclick="viewCodeDetails()">View</button></td>
+          </tr>
+          <tr>
+            <td><strong>KL-20264813</strong></td>
+            <td><span class="badge badge-batch">Both</span></td>
+            <td>Registration - Jane Doe</td>
+            <td>May 21, 2026</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td>
+            <td>8</td>
+            <td><button class="btn-export" onclick="viewCodeDetails()">View</button></td>
+          </tr>
+          <tr>
+            <td><strong>KL-20264811</strong></td>
+            <td><span class="badge badge-barcode">Barcode</span></td>
+            <td>TRC - ABC Corp</td>
+            <td>May 20, 2026</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Verified</span></td>
+            <td>5</td>
+            <td><button class="btn-export" onclick="viewCodeDetails()">View</button></td>
+          </tr>
+          <tr>
+            <td><strong>KL-20264810</strong></td>
+            <td><span class="badge badge-qr">QR</span></td>
+            <td>Authority - XYZ Ltd</td>
+            <td>May 19, 2026</td>
+            <td><span class="badge" style="background:#fff3e0;color:#f57c00">Pending</span></td>
+            <td>0</td>
+            <td><button class="btn-export" onclick="viewCodeDetails()">View</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function generateBarcode() {
+      const value = document.getElementById('barcodeValue').value || 'KL-00000000';
+      const format = document.getElementById('barcodeFormat').value;
+      document.getElementById('barcodeDisplayValue').textContent = value;
+      
+      JsBarcode("#barcodePreview", value, {
+        format: format,
+        width: 2,
+        height: 100,
+        displayValue: false
+      });
+    }
+
+    function generateQR() {
+      const value = document.getElementById('qrValue').value || 'KL-00000000';
+      const size = parseInt(document.getElementById('qrSize').value);
+      document.getElementById('qrDisplayValue').textContent = value;
+      document.getElementById('qrPreview').innerHTML = '';
+      
+      QRCode.toCanvas(document.getElementById('qrPreview'), value, {
+        width: size,
+        margin: 10,
+        color: {
+          dark: '#3d2b7a',
+          light: '#ffffff'
+        }
+      }, function(error) {
+        if (error) console.error(error);
+      });
+    }
+
+    function generateBatch() {
+      const applications = Array.from(document.getElementById('applicationSelect').selectedOptions)
+        .map(opt => opt.value);
+      const codeType = document.getElementById('batchCodeType').value;
+      const container = document.getElementById('batchResults');
+      container.innerHTML = '';
+
+      applications.forEach((app, i) => {
+        const refId = app.split('(')[0].trim();
+        const html = `
+          <div class="code-item">
+            <div style="font-weight:600">${refId}</div>
+            <div class="code-item-value">${app}</div>
+            <div class="code-item-preview">
+              ${codeType === 'barcode' || codeType === 'both' ? `<svg id="batch-barcode-${i}"></svg>` : ''}
+              ${codeType === 'qr' || codeType === 'both' ? `<div id="batch-qr-${i}" style="width:80px;height:80px"></div>` : ''}
+            </div>
+            <button class="btn-export" onclick="downloadCode('${refId}')">Download</button>
+          </div>
+        `;
+        container.innerHTML += html;
+
+        if (codeType === 'barcode' || codeType === 'both') {
+          JsBarcode(`#batch-barcode-${i}`, refId, { width: 2, height: 60, displayValue: false });
+        }
+        if (codeType === 'qr' || codeType === 'both') {
+          QRCode.toCanvas(document.getElementById(`batch-qr-${i}`), refId, {
+            width: 80,
+            margin: 2,
+            color: { dark: '#3d2b7a', light: '#ffffff' }
+          });
+        }
+      });
+    }
+
+    function downloadBarcode(format) {
+      alert(`Downloading barcode as ${format.toUpperCase()}`);
+    }
+
+    function downloadQR(format) {
+      alert(`Downloading QR code as ${format.toUpperCase()}`);
+    }
+
+    function downloadBatch(format) {
+      alert(`Downloading batch as ${format.toUpperCase()}`);
+    }
+
+    function downloadCode(refId) {
+      alert(`Downloading code for ${refId}`);
+    }
+
+    function copyBarcode() {
+      const value = document.getElementById('barcodeValue').value;
+      navigator.clipboard.writeText(value);
+      alert('Barcode value copied: ' + value);
+    }
+
+    function copyQR() {
+      const value = document.getElementById('qrValue').value;
+      navigator.clipboard.writeText(value);
+      alert('QR value copied');
+    }
+
+    function printBarcode() {
+      window.print();
+    }
+
+    function printQR() {
+      window.print();
+    }
+
+    function viewCodeDetails() {
+      alert('Code details dialog opening...');
+    }
+
+    // Initialize
+    generateBarcode();
+    generateQR();
+  </script>
+</body>
+</html>

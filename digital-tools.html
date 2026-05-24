@@ -159,12 +159,20 @@
 
 <section class="section-inner" style="max-width:1180px;margin:0 auto;padding:1rem 5vw 0">
   <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1rem">
-    <a class="btn-outline" href="client-login.html">Client Login</a>
-    <a class="btn-outline" href="client-dashboard.html">Client Dashboard</a>
-    <a class="btn-outline" href="admin-dashboard.html">Admin Dashboard</a>
-    <a class="btn-outline" href="fleet-dashboard.html">Fleet Portal</a>
-    <a class="btn-outline" href="uploader.html">Secure Uploader</a>
-    <a class="btn-outline" href="quote.html">Instant Quote</a>
+    <!-- USER TOOLS -->
+    <a class="btn-outline" href="client-login.html">🔓 Client Login</a>
+    <a class="btn-outline" href="client-dashboard.html">👤 Client Dashboard</a>
+    <a class="btn-outline" href="uploader.html">📄 Secure Uploader</a>
+    <a class="btn-outline" href="quote.html">💰 Instant Quote</a>
+    
+    <!-- ADMIN TOOLS -->
+    <a class="btn-outline" href="admin-dashboard.html">🔑 Admin Control</a>
+    <a class="btn-outline" href="fleet-dashboard.html">🚗 Fleet Portal</a>
+    <a class="btn-outline" href="analytics-dashboard.html">📈 Analytics</a>
+    <a class="btn-outline" href="compliance-reports.html">📊 Reports</a>
+    <a class="btn-outline" href="barcode-qr-system.html">🔐 Barcode & QR</a>
+    <a class="btn-outline" href="team-access-control.html">👥 Team Control</a>
+    <a class="btn-outline" href="bulk-renewal.html">📋 Bulk Renewal</a>
   </div>
 </section>
 
@@ -313,47 +321,168 @@
   </div>
 </section>
 
+<!-- USER VS ADMIN SECTIONS -->
+<section id="tools">
+  <div class="section-inner">
+    <div style="margin-top: 3rem; margin-bottom: 3rem;">
+      <h2 style="margin-bottom: 2rem;">Access & Permissions</h2>
+      
+      <!-- USER SECTION -->
+      <div style="margin-bottom: 3rem;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem;">
+          <div style="font-size: 2rem;">👤</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; color: var(--ink); margin: 0;">User Tools</h3>
+        </div>
+        <p class="section-desc" style="margin-bottom: 2rem;">Tools available to all clients for managing their own applications and vehicles.</p>
+        
+        <div class="tools-grid">
+          <div class="tool-card">
+            <span class="tool-badge badge-free">Free</span>
+            <h3>📍 Real-Time Application Tracker</h3>
+            <p>Enter your reference number and see live progress from document receipt through to collection. Get WhatsApp notifications at each stage.</p>
+          </div>
+
+          <div class="tool-card">
+            <span class="tool-badge badge-free">Free</span>
+            <h3>📄 Secure Document Uploader</h3>
+            <p>Upload ID, proof of address, and vehicle papers directly from your phone. Digital signature support. Bank-grade encryption.</p>
+          </div>
+
+          <div class="tool-card">
+            <span class="tool-badge badge-free">Free</span>
+            <h3>💰 Instant Quote Calculator</h3>
+            <p>Get clear, itemised quotes in seconds. See government fees, service charges, and courier costs before committing.</p>
+          </div>
+
+          <div class="tool-card">
+            <span class="tool-badge badge-free">Free</span>
+            <h3>🔔 Renewal Reminder Engine</h3>
+            <p>Register your disc expiry once. Automatic WhatsApp reminders at 60, 30, and 7 days before expiry.</p>
+          </div>
+
+          <div class="tool-card">
+            <span class="tool-badge badge-free">Free</span>
+            <h3>🤖 24/7 WhatsApp Bot</h3>
+            <p>Ask questions anytime. Our bot handles FAQs, collects vehicle details, and logs requests around the clock.</p>
+          </div>
+
+          <div class="tool-card">
+            <span class="tool-badge badge-new">New</span>
+            <h3>💼 Team Collaboration Hub</h3>
+            <p>Share applications with family or business partners. Approve payments and review documents together in real-time.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN SECTION -->
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; margin-top: 2rem;">
+          <div style="font-size: 2rem;">🔑</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; color: var(--ink); margin: 0;">Admin & Manager Tools</h3>
+        </div>
+        <p class="section-desc" style="margin-bottom: 2rem;">Advanced tools for Q4you staff and business managers to oversee operations and fleet management.</p>
+        
+        <div class="tools-grid">
+          <div class="tool-card" style="cursor:pointer;transition:all 0.2s" onclick="window.location.href='fleet-dashboard.html'">
+            <span class="tool-badge badge-pro">Pro</span>
+            <h3>🚗 Fleet Management Portal</h3>
+            <p>Centralized dashboard for all vehicles. Track expiry dates, renewal statuses, payment history. Expiry alerts at 60, 30, 7 days.</p>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+              <a href="fleet-dashboard.html" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;text-decoration:none;display:inline-block">Access Tool →</a>
+            </div>
+          </div>
+
+          <div class="tool-card" style="cursor:pointer;transition:all 0.2s" onclick="window.location.href='analytics-dashboard.html'">
+            <span class="tool-badge badge-pro">Pro</span>
+            <h3>📈 Analytics Dashboard</h3>
+            <p>Track application volumes, turnaround times, cost trends, and service performance. Make data-driven decisions with detailed metrics.</p>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+              <a href="analytics-dashboard.html" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;text-decoration:none;display:inline-block">Access Tool →</a>
+            </div>
+          </div>
+
+          <div class="tool-card" style="cursor:pointer;transition:all 0.2s" onclick="window.location.href='compliance-reports.html'">
+            <span class="tool-badge badge-pro">Pro</span>
+            <h3>📊 Compliance Reports</h3>
+            <p>Monthly PDF reports with all vehicles, statuses, and upcoming renewals. Perfect for dealerships and fleet managers.</p>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+              <a href="compliance-reports.html" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;text-decoration:none;display:inline-block">Access Tool →</a>
+            </div>
+          </div>
+
+          <div class="tool-card" style="cursor:pointer;transition:all 0.2s" onclick="window.location.href='barcode-qr-system.html'">
+            <span class="tool-badge badge-pro">Pro</span>
+            <h3>🔐 Barcode & QR System</h3>
+            <p>Generate unique tracking codes for applications. Instant authentication for document verification at government offices.</p>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+              <a href="barcode-qr-system.html" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;text-decoration:none;display:inline-block">Access Tool →</a>
+            </div>
+          </div>
+
+          <div class="tool-card" style="cursor:pointer;transition:all 0.2s" onclick="window.location.href='team-access-control.html'">
+            <span class="tool-badge badge-pro">Pro</span>
+            <h3>👥 Team Member Access Control</h3>
+            <p>Manage who can view, edit, or approve applications. Role-based permissions for admin, manager, and viewer accounts.</p>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+              <a href="team-access-control.html" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;text-decoration:none;display:inline-block">Access Tool →</a>
+            </div>
+          </div>
+
+          <div class="tool-card" style="cursor:pointer;transition:all 0.2s" onclick="window.location.href='bulk-renewal.html'">
+            <span class="tool-badge badge-pro">Pro</span>
+            <h3>📋 Bulk Renewal Management</h3>
+            <p>Process multiple vehicles at once. Batch actions, scheduled renewals, and automated payment processing for fleets.</p>
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+              <a href="bulk-renewal.html" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;text-decoration:none;display:inline-block">Access Tool →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ALL TOOLS GRID -->
 <section id="tools">
-  <div class="section-inner" style="margin-top: 4rem;">
-    <h2 style="margin-bottom: 0.5rem;">Complete Tool Suite</h2>
-    <p class="section-desc" style="margin-bottom: 2.5rem;">Every digital feature you need to manage your vehicle licensing with confidence.</p>
+  <div class="section-inner" style="margin-top: 2rem;">
+    <h2 style="margin-bottom: 0.5rem;">Feature Highlights</h2>
+    <p class="section-desc" style="margin-bottom: 2.5rem;">A complete overview of every capability in the Q4you platform.</p>
 
     <div class="tools-grid">
       <div class="tool-card">
-        <span class="tool-badge badge-free">Free</span>
-        <h3>🔔 Renewal Reminder Engine</h3>
-        <p>Register your disc expiry once. Receive automatic WhatsApp reminders at 60, 30 and 7 days before expiry. Never lapse or face fines again.</p>
-      </div>
-
-      <div class="tool-card">
-        <span class="tool-badge badge-coming">Coming Soon</span>
-        <h3>🔐 Barcode & QR System</h3>
-        <p>Generate unique tracking codes for each application. Share with stakeholders. Instant authentication for document verification at government offices.</p>
-      </div>
-
-      <div class="tool-card">
         <span class="tool-badge badge-pro">Pro</span>
-        <h3>📊 Compliance Reports</h3>
-        <p>Monthly PDF reports for dealerships and fleet managers — all vehicles, statuses and upcoming renewals in one professional document.</p>
-      </div>
-
-      <div class="tool-card">
-        <span class="tool-badge badge-free">Free</span>
-        <h3>🤖 24/7 WhatsApp Bot</h3>
-        <p>Handles FAQs, collects vehicle details and logs service requests around the clock — even on weekends and public holidays.</p>
+        <h3>🔐 Advanced Security Features</h3>
+        <p>Bank-grade encryption, two-factor authentication, encrypted document storage, and compliance with POPIA regulations.</p>
       </div>
 
       <div class="tool-card">
         <span class="tool-badge badge-new">New</span>
-        <h3>💼 Team Collaboration Hub</h3>
-        <p>Share applications with family members or business partners. Approve payments, review documents, and get updates together in real-time.</p>
+        <h3>📱 Mobile App (Beta)</h3>
+        <p>Native iOS and Android apps for tracking, uploads, quotes, and notifications. Coming Q3 2026.</p>
       </div>
 
       <div class="tool-card">
         <span class="tool-badge badge-pro">Pro</span>
-        <h3>📈 Analytics Dashboard</h3>
-        <p>Track application volumes, turnaround times, cost trends, and service performance metrics over time. Data-driven decision making.</p>
+        <h3>🔗 API Integration</h3>
+        <p>Connect Q4you with your existing systems. REST API for custom integrations and enterprise workflows.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-pro">Pro</span>
+        <h3>📧 Automated Email Reports</h3>
+        <p>Scheduled reports delivered to your inbox. Customizable templates and distribution lists.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-coming">Coming Soon</span>
+        <h3>🤝 Integration Marketplace</h3>
+        <p>Connect with accounting software, CRM systems, and other business tools through pre-built integrations.</p>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-badge badge-pro">Pro</span>
+        <h3>📞 Priority Support</h3>
+        <p>Dedicated support line, faster response times, and priority handling for all issues and inquiries.</p>
       </div>
     </div>
   </div>

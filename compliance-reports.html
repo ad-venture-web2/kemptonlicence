@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Compliance Reports — Q4you</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .wrap{max-width:1200px;margin:6rem auto;padding:2rem}
+    .header{margin-bottom:2rem}
+    .filter-bar{display:flex;gap:10px;margin-bottom:2rem;flex-wrap:wrap}
+    .filter-group{display:flex;flex-direction:column}
+    .filter-group label{font-size:0.85rem;font-weight:600;color:var(--muted);margin-bottom:4px}
+    .reports-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+    .report-card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow);border-top:4px solid var(--teal)}
+    .report-title{font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;color:var(--ink)}
+    .report-date{font-size:0.85rem;color:var(--muted)}
+    .report-meta{display:flex;gap:10px;margin-top:1rem;font-size:0.9rem}
+    .report-meta span{background:var(--cream);padding:4px 8px;border-radius:4px}
+    .report-actions{display:flex;gap:8px;margin-top:1rem}
+    .btn-action{padding:6px 12px;font-size:0.85rem;background:var(--cream);border:1px solid var(--border);border-radius:6px;cursor:pointer;text-decoration:none;color:var(--teal)}
+    .btn-action:hover{background:var(--teal);color:#fff}
+    .btn-primary{background:var(--grad);color:#fff;border:none}
+    .report-list{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--shadow);margin-top:2rem}
+    table{width:100%;border-collapse:collapse;margin-top:1rem}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid #f2f2f2}
+    th{background:var(--cream);font-weight:700}
+    .badge{display:inline-block;padding:4px 8px;border-radius:4px;font-size:0.8rem;font-weight:600}
+    .badge-monthly{background:#e3f2fd;color:#1976d2}
+    .badge-quarterly{background:#f3e5f5;color:#7b1fa2}
+    .badge-annual{background:#e8f5e9;color:#388e3c}
+    .badge-custom{background:#fff3e0;color:#f57c00}
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
+    <a href="home.html" style="text-decoration:none;color:var(--teal);font-weight:700">Q4you Compliance</a>
+  </nav>
+
+  <main class="wrap">
+    <div class="header">
+      <h1 style="margin:0">Compliance Reports</h1>
+      <p style="color:var(--muted);margin-top:0.5rem">Generate, schedule, and manage compliance documentation</p>
+    </div>
+
+    <!-- FILTERS & GENERATION -->
+    <div class="filter-bar">
+      <div class="filter-group" style="flex:1;min-width:150px">
+        <label>Report Type</label>
+        <select id="reportType" onchange="updateReports()">
+          <option value="all">All Reports</option>
+          <option value="monthly">Monthly Summary</option>
+          <option value="quarterly">Quarterly Report</option>
+          <option value="annual">Annual Report</option>
+          <option value="custom">Custom Report</option>
+        </select>
+      </div>
+      <div class="filter-group" style="flex:1;min-width:150px">
+        <label>Date Range</label>
+        <input type="month" id="reportMonth" onchange="updateReports()">
+      </div>
+      <div class="filter-group" style="flex:1;min-width:150px">
+        <label>Status</label>
+        <select id="reportStatus" onchange="updateReports()">
+          <option value="all">All</option>
+          <option value="generated">Generated</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="draft">Draft</option>
+        </select>
+      </div>
+      <div class="filter-group" style="flex:1;min-width:150px">
+        <label>&nbsp;</label>
+        <button class="btn-primary btn-action" onclick="generateNewReport()" style="border:none;background:var(--grad);color:#fff">+ Generate New</button>
+      </div>
+    </div>
+
+    <!-- QUICK REPORT GENERATION -->
+    <div class="reports-grid">
+      <div class="report-card">
+        <div class="report-title">📊 Monthly Compliance Report</div>
+        <div class="report-date">Last generated: May 15, 2026</div>
+        <p style="font-size:0.9rem;color:var(--muted);margin:1rem 0">Comprehensive overview of all applications, compliance statuses, and regulatory adherence for the month.</p>
+        <div class="report-meta">
+          <span>142 apps</span>
+          <span>94% compliance</span>
+        </div>
+        <div class="report-actions">
+          <button class="btn-action btn-primary" onclick="downloadReport('monthly')">📥 Download PDF</button>
+          <button class="btn-action" onclick="scheduleReport('monthly')">⏰ Schedule</button>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="report-title">📈 Quarterly Fleet Report</div>
+        <div class="report-date">Last generated: May 1, 2026</div>
+        <p style="font-size:0.9rem;color:var(--muted);margin:1rem 0">Vehicle inventory status, renewal schedules, and compliance metrics for all registered fleet vehicles.</p>
+        <div class="report-meta">
+          <span>847 vehicles</span>
+          <span>98% valid</span>
+        </div>
+        <div class="report-actions">
+          <button class="btn-action btn-primary" onclick="downloadReport('quarterly')">📥 Download PDF</button>
+          <button class="btn-action" onclick="scheduleReport('quarterly')">⏰ Schedule</button>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="report-title">✅ Compliance Audit Report</div>
+        <div class="report-date">Last generated: April 30, 2026</div>
+        <p style="font-size:0.9rem;color:var(--muted);margin:1rem 0">Detailed audit trail covering document verification, regulatory compliance, and quality standards adherence.</p>
+        <div class="report-meta">
+          <span>Complete</span>
+          <span>100% verified</span>
+        </div>
+        <div class="report-actions">
+          <button class="btn-action btn-primary" onclick="downloadReport('audit')">📥 Download PDF</button>
+          <button class="btn-action" onclick="scheduleReport('audit')">⏰ Schedule</button>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="report-title">🎯 Performance & Service Report</div>
+        <div class="report-date">Last generated: May 20, 2026</div>
+        <p style="font-size:0.9rem;color:var(--muted);margin:1rem 0">Service level metrics, turnaround times, customer satisfaction scores, and operational efficiency data.</p>
+        <div class="report-meta">
+          <span>4.7/5.0 rating</span>
+          <span>3.2 days avg</span>
+        </div>
+        <div class="report-actions">
+          <button class="btn-action btn-primary" onclick="downloadReport('performance')">📥 Download PDF</button>
+          <button class="btn-action" onclick="scheduleReport('performance')">⏰ Schedule</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT HISTORY -->
+    <div class="report-list">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 style="margin:0">Report History</h2>
+        <select id="reportFilter" onchange="updateReports()" style="padding:6px 12px;border-radius:6px;border:1px solid #e6e6e6">
+          <option value="all">All Reports</option>
+          <option value="monthly" selected>Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="annual">Annual</option>
+        </select>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Report Name</th>
+            <th>Type</th>
+            <th>Period</th>
+            <th>Generated</th>
+            <th>Records</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="reportList">
+          <tr>
+            <td><strong>May 2026 Compliance Summary</strong></td>
+            <td><span class="badge badge-monthly">Monthly</span></td>
+            <td>May 1-31, 2026</td>
+            <td>May 22, 2026</td>
+            <td>142 applications</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">✓ Complete</span></td>
+            <td><button class="btn-action" onclick="downloadReport('may2026')">Download</button></td>
+          </tr>
+          <tr>
+            <td><strong>Q1 2026 Quarterly Report</strong></td>
+            <td><span class="badge badge-quarterly">Quarterly</span></td>
+            <td>Jan 1 - Mar 31, 2026</td>
+            <td>Apr 5, 2026</td>
+            <td>387 applications</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">✓ Complete</span></td>
+            <td><button class="btn-action" onclick="downloadReport('q1')">Download</button></td>
+          </tr>
+          <tr>
+            <td><strong>April 2026 Compliance Summary</strong></td>
+            <td><span class="badge badge-monthly">Monthly</span></td>
+            <td>Apr 1-30, 2026</td>
+            <td>May 1, 2026</td>
+            <td>128 applications</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">✓ Complete</span></td>
+            <td><button class="btn-action" onclick="downloadReport('april')">Download</button></td>
+          </tr>
+          <tr>
+            <td><strong>2025 Annual Compliance Report</strong></td>
+            <td><span class="badge badge-annual">Annual</span></td>
+            <td>Jan 1 - Dec 31, 2025</td>
+            <td>Jan 15, 2026</td>
+            <td>1,247 applications</td>
+            <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">✓ Complete</span></td>
+            <td><button class="btn-action" onclick="downloadReport('2025')">Download</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SCHEDULED REPORTS -->
+    <div class="report-list">
+      <h2 style="margin-top:0">Scheduled Reports</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Report Type</th>
+            <th>Frequency</th>
+            <th>Recipients</th>
+            <th>Next Run</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Monthly Compliance</strong></td>
+            <td>1st of each month</td>
+            <td>admin@q4you.co.za</td>
+            <td>June 1, 2026</td>
+            <td><span class="badge" style="background:#e3f2fd;color:#1976d2">Active</span></td>
+            <td><button class="btn-action" onclick="editSchedule()">Edit</button></td>
+          </tr>
+          <tr>
+            <td><strong>Quarterly Report</strong></td>
+            <td>1st of Q month</td>
+            <td>admin@q4you.co.za, manager@q4you.co.za</td>
+            <td>July 1, 2026</td>
+            <td><span class="badge" style="background:#e3f2fd;color:#1976d2">Active</span></td>
+            <td><button class="btn-action" onclick="editSchedule()">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function generateNewReport() {
+      alert('Report generation wizard opening... (prototype)');
+    }
+
+    function downloadReport(type) {
+      const reportNames = {
+        'monthly': 'May-2026-Compliance-Report.pdf',
+        'quarterly': 'Q1-2026-Fleet-Report.pdf',
+        'audit': 'Compliance-Audit-Report.pdf',
+        'performance': 'Performance-Report.pdf'
+      };
+      alert('Downloading: ' + (reportNames[type] || type + '-report.pdf'));
+    }
+
+    function scheduleReport(type) {
+      alert('Schedule report dialog opening for: ' + type);
+    }
+
+    function editSchedule() {
+      alert('Edit schedule dialog opening...');
+    }
+
+    function updateReports() {
+      // Filter reports based on selections
+      console.log('Updating reports...');
+    }
+
+    // Set current month
+    const now = new Date();
+    document.getElementById('reportMonth').valueAsDate = now;
+  </script>
+</body>
+</html>
