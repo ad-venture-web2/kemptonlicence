@@ -25,11 +25,26 @@
     .status-good{background:#e8f5e9;color:#2e7d32}
     .status-warning{background:#fff3e0;color:#cc8800}
     .status-critical{background:#ffebee;color:#b00020}
+
+    .top-nav{position:fixed;left:0;right:0;top:0;background:#fff;padding:14px 5vw;border-bottom:1px solid #eee;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;box-shadow:0 2px 20px rgba(26,107,90,0.07)}
+    .top-nav .brand{font-weight:700;color:var(--teal);text-decoration:none;font-size:1rem}
+    .menu-blocks{display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center}
+    .menu-block{display:inline-flex;align-items:center;justify-content:center;padding:0.85rem 1.2rem;border-radius:18px;background:#f6fbf8;color:var(--ink);text-decoration:none;font-weight:600;border:1px solid rgba(26,107,90,0.12);transition:transform 0.15s,background 0.2s,border-color 0.2s}
+    .menu-block:hover{background:var(--teal-pale);border-color:var(--teal-light);transform:translateY(-1px)}
+    .menu-block.active{background:var(--teal);color:#fff;border-color:transparent}
+    .menu-block.cta{background:#25d366;color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(37,211,102,0.18)}
   </style>
 </head>
 <body>
-  <nav style="position:fixed;left:0;right:0;top:0;background:#fff;padding:12px 5vw;border-bottom:1px solid #eee;z-index:100">
-    <a href="home.html" style="text-decoration:none;color:var(--teal);font-weight:700">Q4you Analytics</a>
+  <nav class="top-nav">
+    <a href="home.html" class="brand">Q4you Analytics</a>
+    <div class="menu-blocks">
+      <a href="analytics-dashboard.html" class="menu-block active">Analytics</a>
+      <a href="client-dashboard.html" class="menu-block">Clients</a>
+      <a href="admin-dashboard.html" class="menu-block">Admin</a>
+      <a href="contact.html" class="menu-block">Contact</a>
+    </div>
+    <a href="https://wa.me/27842642299" class="menu-block cta" target="_blank">📱 WhatsApp</a>
   </nav>
   
   <main class="wrap">
